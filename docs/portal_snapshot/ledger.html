@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ledger &mdash; eval-suite portal</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<nav>
+    <a href="/ui/" >home</a>
+    <a href="/ui/submissions" >submissions</a>
+    <a href="/ui/registry" >registry</a>
+    <a href="/ui/compare" >compare</a>
+    <a href="/ui/ledger" class="active">ledger</a>
+    <a href="/ui/about" >about</a>
+</nav>
+
+
+
+<h1>submission ledger <a class="json-link" href="/ledger">view as raw JSONL</a></h1>
+
+<p class="muted">
+    Append-only by convention &mdash; the portal code only appends, never rewrites.
+    <strong>Not</strong> cryptographically tamper-evident. The portal operator
+    could selectively rewrite or hide entries. Sigstore migration in v1
+    closes this hole. See <a href="/ui/about">about</a> for the full trust model.
+</p>
+
+
+<p class="empty">ledger is empty.</p>
+
+
+
+
+<footer>
+    eval-suite portal &middot; CONTRACT_VERSION = <code>1.0.0</code>
+    &middot; <a href="/ui/about">trust model</a>
+</footer>
+
+</body>
+</html>

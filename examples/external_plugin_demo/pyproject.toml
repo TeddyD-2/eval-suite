@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eval-suite-plugin-demo"
+version = "0.1.0"
+description = "Reference external eval-suite plugin (mock household task + industrial-arm policy). Demonstrates the plugin substrate end-to-end."
+requires-python = ">=3.10"
+license = { text = "MIT" }
+readme = "README.md"
+
+# Third-party plugins depend on the SUBSTRATE only (eval-suite-core),
+# not on the in-tree reference plugins (eval-suite-stdlib). The split
+# makes this explicit: -stdlib is replaceable; -core is the contract.
+dependencies = [
+    "eval-suite-core",
+    "numpy>=1.24",
+]
+
+# A third-party package declares its Tasks / Policies / Adapters under
+# the eval_suite.* entry-point groups. After `pip install` of this
+# package, the eval-suite registry sees these entries alongside the
+# in-tree -stdlib ones.
+
+[project.entry-points."eval_suite.tasks"]
+household_mock = "plugin_demo.household_task:HouseholdMockTask"
+
+[project.entry-points."eval_suite.policies"]
+industrial_arm_mock = "plugin_demo.industrial_policy:IndustrialArmMockPolicy"
+
+[tool.setuptools.packages.find]
+include = ["plugin_demo*"]

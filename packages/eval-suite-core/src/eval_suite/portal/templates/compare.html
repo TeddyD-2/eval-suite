@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}compare &mdash; eval-suite portal{% endblock %}
+{% block content %}
+
+<h1>compare two submissions</h1>
+
+{% if not have_both %}
+<p class="muted">
+    Pick two submissions to compare. The compare view renders the
+    <strong>canonical 4-dimension profile</strong>
+    (<code>language</code> / <code>visuals</code> / <code>physics</code> /
+    <code>embodiment</code>) for each &mdash; not raw per-cell axes. That's
+    what makes runs from different task families directly comparable.
+</p>
+
+{% if options %}
+<form method="GET" action="/ui/compare">
+    a: <select name="a">
+        <option value="">-- choose --</option>
+        {% for opt in options %}
+        <option value="{{ opt.run_id }}" {% if opt.run_id == a_id %}selected{% endif %}>{{ opt.label }}</option>
+        {% endfor %}
+    </select>
+    b: <select name="b">
+        <option value="">-- choose --</option>
+        {% for opt in options %}
+        <option value="{{ opt.run_id }}" {% if opt.run_id == b_id %}selected{% endif %}>{{ opt.label }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">compare</button>
+</form>
+{% else %}
+<p class="empty">no submissions yet to compare.</p>
+{% endif %}
+
+{% else %}
+{% if same_run %}
+<p class="warn">
+    Both columns are the same run_id; this is not a meaningful comparison.
+</p>
+{% endif %}
+
+<table>
+    <thead><tr>
+        <th></th>
+        <th>
+            <a href="/ui/submissions/{{ a.manifest.run_id }}"><code>{{ a.run_id_short }}</code></a>
+        </th>
+        <th>
+            <a href="/ui/submissions/{{ b.manifest.run_id }}"><code>{{ b.run_id_short }}</code></a>
+        </th>
+    </tr></thead>
+    <tbody>
+        <tr><td>model</td>      <td>{{ a.manifest.model.name }}</td><td>{{ b.manifest.model.name }}</td></tr>
+        <tr><td>embodiment</td> <td>{{ a.manifest.embodiment }}</td><td>{{ b.manifest.embodiment }}</td></tr>
+        <tr><td>task</td>       <td><code>{{ a.manifest.task_name }}</code></td><td><code>{{ b.manifest.task_name }}</code></td></tr>
+        <tr><td>overall</td>    <td>{{ "%.3f"|format(a.overall) }}</td><td>{{ "%.3f"|format(b.overall) }}</td></tr>
+
+        {% for dim in dims %}
+        {% set ra = a.profile.per_dim[dim] %}
+        {% set rb = b.profile.per_dim[dim] %}
+        <tr>
+            <td>
+                {{ dim }}
+                {% if dim == a.profile.worst_dim_name or dim == b.profile.worst_dim_name %}
+                    <span class="muted">(worst on at least one)</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if ra.n_cells == 0 %}<span class="muted">not measured</span>
+                {% else %}{{ "%.3f"|format(ra.mean) }}
+                    {% if dim == a.profile.worst_dim_name %}<span class="worst"> &starf;</span>{% endif %}
+                {% endif %}
+            </td>
+            <td>
+                {% if rb.n_cells == 0 %}<span class="muted">not measured</span>
+                {% else %}{{ "%.3f"|format(rb.mean) }}
+                    {% if dim == b.profile.worst_dim_name %}<span class="worst"> &starf;</span>{% endif %}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+
+        <tr><td>n cells</td>   <td>{{ a.manifest.cells|length }}</td><td>{{ b.manifest.cells|length }}</td></tr>
+        <tr><td>n trials</td>  <td>{{ a.total_trials }}</td>        <td>{{ b.total_trials }}</td></tr>
+        <tr><td>detail</td>
+            <td><a href="/ui/submissions/{{ a.manifest.run_id }}">view full</a></td>
+            <td><a href="/ui/submissions/{{ b.manifest.run_id }}">view full</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<p class="aside">
+    Share this comparison: <code>{{ share_url }}</code>
+</p>
+
+{% endif %}
+
+{% endblock %}

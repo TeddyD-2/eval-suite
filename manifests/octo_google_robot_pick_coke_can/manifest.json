@@ -1,0 +1,479 @@
+{
+  "calibration": {
+    "real_perf_source": "SimplerEnv paper Table 3 (Octo on Google Robot pick coke can)",
+    "real_perf_value": null,
+    "tier": "B"
+  },
+  "canonical_axis_map": {
+    "background": "visuals",
+    "distractor": "visuals",
+    "lighting": "visuals",
+    "orientation": "physics",
+    "paraphrase": "language",
+    "table_texture": "visuals"
+  },
+  "cells": [
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "horizontal",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=horizontal,table_texture=base",
+      "n_trials": 20,
+      "successes": 6,
+      "wilson_ci_high": 0.5189728183535235,
+      "wilson_ci_low": 0.1454772448676043
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "darker",
+        "orientation": "horizontal",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=darker,orientation=horizontal,table_texture=base",
+      "n_trials": 20,
+      "successes": 2,
+      "wilson_ci_high": 0.3010336452284873,
+      "wilson_ci_low": 0.027866481213768224
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "brighter",
+        "orientation": "horizontal",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=brighter,orientation=horizontal,table_texture=base",
+      "n_trials": 20,
+      "successes": 1,
+      "wilson_ci_high": 0.23613119344674205,
+      "wilson_ci_low": 0.008881448800795402
+    },
+    {
+      "axes": {
+        "background": "alt_1",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "horizontal",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=alt_1,distractor=base,lighting=base,orientation=horizontal,table_texture=base",
+      "n_trials": 20,
+      "successes": 7,
+      "wilson_ci_high": 0.5671457233147638,
+      "wilson_ci_low": 0.18119182410108206
+    },
+    {
+      "axes": {
+        "background": "alt_2",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "horizontal",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=alt_2,distractor=base,lighting=base,orientation=horizontal,table_texture=base",
+      "n_trials": 20,
+      "successes": 8,
+      "wilson_ci_high": 0.6134184992377469,
+      "wilson_ci_low": 0.21880653237281705
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "more",
+        "lighting": "base",
+        "orientation": "horizontal",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=more,lighting=base,orientation=horizontal,table_texture=base",
+      "n_trials": 20,
+      "successes": 12,
+      "wilson_ci_high": 0.781193467627183,
+      "wilson_ci_low": 0.3865815007622531
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "horizontal",
+        "table_texture": "cabinet1"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=horizontal,table_texture=cabinet1",
+      "n_trials": 20,
+      "successes": 5,
+      "wilson_ci_high": 0.468700877618744,
+      "wilson_ci_low": 0.11186170140766569
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "horizontal",
+        "table_texture": "cabinet2"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=horizontal,table_texture=cabinet2",
+      "n_trials": 20,
+      "successes": 8,
+      "wilson_ci_high": 0.6134184992377469,
+      "wilson_ci_low": 0.21880653237281705
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "vertical",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=vertical,table_texture=base",
+      "n_trials": 20,
+      "successes": 6,
+      "wilson_ci_high": 0.5189728183535235,
+      "wilson_ci_low": 0.1454772448676043
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "darker",
+        "orientation": "vertical",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=darker,orientation=vertical,table_texture=base",
+      "n_trials": 20,
+      "successes": 0,
+      "wilson_ci_high": 0.16112515805281938,
+      "wilson_ci_low": 0.0
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "brighter",
+        "orientation": "vertical",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=brighter,orientation=vertical,table_texture=base",
+      "n_trials": 20,
+      "successes": 7,
+      "wilson_ci_high": 0.5671457233147638,
+      "wilson_ci_low": 0.18119182410108206
+    },
+    {
+      "axes": {
+        "background": "alt_1",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "vertical",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=alt_1,distractor=base,lighting=base,orientation=vertical,table_texture=base",
+      "n_trials": 20,
+      "successes": 7,
+      "wilson_ci_high": 0.5671457233147638,
+      "wilson_ci_low": 0.18119182410108206
+    },
+    {
+      "axes": {
+        "background": "alt_2",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "vertical",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=alt_2,distractor=base,lighting=base,orientation=vertical,table_texture=base",
+      "n_trials": 20,
+      "successes": 8,
+      "wilson_ci_high": 0.6134184992377469,
+      "wilson_ci_low": 0.21880653237281705
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "more",
+        "lighting": "base",
+        "orientation": "vertical",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=more,lighting=base,orientation=vertical,table_texture=base",
+      "n_trials": 20,
+      "successes": 9,
+      "wilson_ci_high": 0.6579146575496577,
+      "wilson_ci_low": 0.2581978582556243
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "vertical",
+        "table_texture": "cabinet1"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=vertical,table_texture=cabinet1",
+      "n_trials": 20,
+      "successes": 8,
+      "wilson_ci_high": 0.6134184992377469,
+      "wilson_ci_low": 0.21880653237281705
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "vertical",
+        "table_texture": "cabinet2"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=vertical,table_texture=cabinet2",
+      "n_trials": 20,
+      "successes": 9,
+      "wilson_ci_high": 0.6579146575496577,
+      "wilson_ci_low": 0.2581978582556243
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "upright",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=upright,table_texture=base",
+      "n_trials": 20,
+      "successes": 4,
+      "wilson_ci_high": 0.41601743225189364,
+      "wilson_ci_low": 0.08065766257979806
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "darker",
+        "orientation": "upright",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=darker,orientation=upright,table_texture=base",
+      "n_trials": 20,
+      "successes": 0,
+      "wilson_ci_high": 0.16112515805281938,
+      "wilson_ci_low": 0.0
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "brighter",
+        "orientation": "upright",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=brighter,orientation=upright,table_texture=base",
+      "n_trials": 20,
+      "successes": 7,
+      "wilson_ci_high": 0.5671457233147638,
+      "wilson_ci_low": 0.18119182410108206
+    },
+    {
+      "axes": {
+        "background": "alt_1",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "upright",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=alt_1,distractor=base,lighting=base,orientation=upright,table_texture=base",
+      "n_trials": 20,
+      "successes": 7,
+      "wilson_ci_high": 0.5671457233147638,
+      "wilson_ci_low": 0.18119182410108206
+    },
+    {
+      "axes": {
+        "background": "alt_2",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "upright",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=alt_2,distractor=base,lighting=base,orientation=upright,table_texture=base",
+      "n_trials": 20,
+      "successes": 7,
+      "wilson_ci_high": 0.5671457233147638,
+      "wilson_ci_low": 0.18119182410108206
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "more",
+        "lighting": "base",
+        "orientation": "upright",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=more,lighting=base,orientation=upright,table_texture=base",
+      "n_trials": 20,
+      "successes": 4,
+      "wilson_ci_high": 0.41601743225189364,
+      "wilson_ci_low": 0.08065766257979806
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "upright",
+        "table_texture": "cabinet1"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=upright,table_texture=cabinet1",
+      "n_trials": 20,
+      "successes": 5,
+      "wilson_ci_high": 0.468700877618744,
+      "wilson_ci_low": 0.11186170140766569
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "upright",
+        "table_texture": "cabinet2"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=upright,table_texture=cabinet2",
+      "n_trials": 20,
+      "successes": 6,
+      "wilson_ci_high": 0.5189728183535235,
+      "wilson_ci_low": 0.1454772448676043
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "upright",
+        "paraphrase": "base",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=upright,paraphrase=base,table_texture=base",
+      "n_trials": 20,
+      "successes": 6,
+      "wilson_ci_high": 0.5189728183535235,
+      "wilson_ci_low": 0.1454772448676043
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "upright",
+        "paraphrase": "synonym",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=upright,paraphrase=synonym,table_texture=base",
+      "n_trials": 20,
+      "successes": 0,
+      "wilson_ci_high": 0.16112515805281938,
+      "wilson_ci_low": 0.0
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "upright",
+        "paraphrase": "descriptive",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=upright,paraphrase=descriptive,table_texture=base",
+      "n_trials": 20,
+      "successes": 0,
+      "wilson_ci_high": 0.16112515805281938,
+      "wilson_ci_low": 0.0
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "upright",
+        "paraphrase": "ood_walk",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=upright,paraphrase=ood_walk,table_texture=base",
+      "n_trials": 20,
+      "successes": 0,
+      "wilson_ci_high": 0.16112515805281938,
+      "wilson_ci_low": 0.0
+    },
+    {
+      "axes": {
+        "background": "base",
+        "distractor": "base",
+        "lighting": "base",
+        "orientation": "upright",
+        "paraphrase": "ood_stand",
+        "table_texture": "base"
+      },
+      "cell_id": "google_robot/pick_coke_can/background=base,distractor=base,lighting=base,orientation=upright,paraphrase=ood_stand,table_texture=base",
+      "n_trials": 20,
+      "successes": 1,
+      "wilson_ci_high": 0.23613119344674205,
+      "wilson_ci_low": 0.008881448800795402
+    }
+  ],
+  "code_sha": "e0b26453a0a8d822dfcf007c4cdc0c0fb34eb8a5",
+  "container_digest": "",
+  "embodiment": "google_robot",
+  "hardware": {
+    "cuda": "12.4",
+    "driver": "580.126.20",
+    "gpu": "NVIDIA GeForce RTX 3090"
+  },
+  "model": {
+    "checkpoint_sha256": "",
+    "family": "octo",
+    "huggingface_revision": "rail-berkeley/octo-base",
+    "name": "octo-base"
+  },
+  "notes": "v0 sweep: Octo-base on Google Robot, 24-cell VA grid + 5 paraphrase cells (3 in-distribution + 2 cross-embodiment boundary); calibration tier-B on baseline subset",
+  "run_id": "0253bebcecb51089d615b72a17dc5a41a77b208096020672095e0ff6cdc78e18",
+  "schema_version": "0.2.0",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "simulator": {
+    "auxiliary_commits": {
+      "maniskill2_real2sim": "ef7a4d4fdf4b69f2c2154db5b15b9ac8dfe10682"
+    },
+    "commit": "06accaca93535902d408da4855f21cece12bceb7",
+    "name": "simpler-env"
+  },
+  "submitter_identity": null,
+  "submitter_public_key": null,
+  "submitter_signature": null,
+  "task_name": "pick_coke_can",
+  "trials_per_cell": 20
+}

@@ -1,0 +1,56 @@
+name: ci
+
+# Required check on PRs. Verifies the reproducibility substrate without
+# needing a GPU: ruff + mypy + pytest, including the end-to-end sweep
+# contract test that runs the mock policy through the real sweep code
+# path and asserts manifest hash + CSV schema.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contract:
+    name: contract tests
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install packages
+        # The repo ships two distributions: eval-suite-core (substrate) and
+        # eval-suite-stdlib (in-tree reference plugins). Third-party plugins
+        # depend on -core only. Both share the `eval_suite.*` import
+        # namespace via PEP 420.
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e "packages/eval-suite-core[dev]" -e packages/eval-suite-stdlib
+
+      - name: Lint (ruff)
+        run: ruff check packages/eval-suite-core/src/eval_suite packages/eval-suite-stdlib/src/eval_suite tests
+
+      - name: Type check (mypy --strict)
+        run: mypy packages/eval-suite-core/src/eval_suite packages/eval-suite-stdlib/src/eval_suite
+
+      - name: Contract tests (pytest)
+        # `-x` so we stop at the first failure (failing contract = broken
+        # substrate, no point continuing). `-ra` for short summary of skips.
+        run: pytest tests/ -x -ra --durations=10

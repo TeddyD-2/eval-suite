@@ -1,0 +1,33 @@
+# Local virtualenvs — multi-GB, not needed inside the image (the image
+# builds its own /opt/venv).
+.venv*
+venv/
+**/__pycache__/
+**/*.pyc
+
+# Caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Local sweep artifacts and checkpoints. Sweeps are run *inside* the image
+# against a host bind-mount; nothing local needs to enter the build context.
+results/
+checkpoints/
+archive/
+submissions/
+
+# Git history is not needed inside the image (commit SHAs are pinned via ARGs).
+.git/
+.github/
+
+# Tool config / editor scratch
+.claude/
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Notebook checkpoints
+.ipynb_checkpoints/

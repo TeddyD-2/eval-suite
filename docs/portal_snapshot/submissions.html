@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>submissions &mdash; eval-suite portal</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<nav>
+    <a href="/ui/" >home</a>
+    <a href="/ui/submissions" class="active">submissions</a>
+    <a href="/ui/registry" >registry</a>
+    <a href="/ui/compare" >compare</a>
+    <a href="/ui/ledger" >ledger</a>
+    <a href="/ui/about" >about</a>
+</nav>
+
+
+
+<h1>submissions <a class="json-link" href="/submissions">view as JSON</a></h1>
+
+<form method="GET" action="/ui/submissions">
+    model:       <input type="text" name="model"      value="">
+    task:        <input type="text" name="task"       value="">
+    embodiment:  <input type="text" name="embodiment" value="">
+    submitter:   <input type="text" name="submitter"  value="">
+    accepted:    <select name="accepted">
+        <option value="any" selected>any</option>
+        <option value="yes" >yes</option>
+        <option value="no"  >no</option>
+    </select>
+    <button type="submit">filter</button>
+    <a href="/ui/submissions">clear</a>
+</form>
+
+
+<p class="empty">
+    
+        no submissions yet &mdash; POST to <code>/submit</code> to add one.
+    
+</p>
+
+
+
+
+<footer>
+    eval-suite portal &middot; CONTRACT_VERSION = <code>1.0.0</code>
+    &middot; <a href="/ui/about">trust model</a>
+</footer>
+
+</body>
+</html>

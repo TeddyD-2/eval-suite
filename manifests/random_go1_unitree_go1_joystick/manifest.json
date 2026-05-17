@@ -1,0 +1,212 @@
+{
+  "calibration": {
+    "real_perf_source": "",
+    "real_perf_value": null,
+    "tier": "C"
+  },
+  "canonical_axis_map": {
+    "camera": "visuals",
+    "perturbation": "physics",
+    "task_family": "language",
+    "terrain": "physics"
+  },
+  "cells": [
+    {
+      "axes": {
+        "camera": "front",
+        "perturbation": "none",
+        "task_family": "stand",
+        "terrain": "flat"
+      },
+      "cell_id": "unitree_go1/unitree_go1_joystick/camera=front,perturbation=none,task_family=stand,terrain=flat",
+      "n_trials": 10,
+      "successes": 8,
+      "wilson_ci_high": 0.9433178485456247,
+      "wilson_ci_low": 0.49016247153664183
+    },
+    {
+      "axes": {
+        "camera": "front",
+        "perturbation": "none",
+        "task_family": "stand",
+        "terrain": "rough"
+      },
+      "cell_id": "unitree_go1/unitree_go1_joystick/camera=front,perturbation=none,task_family=stand,terrain=rough",
+      "n_trials": 10,
+      "successes": 1,
+      "wilson_ci_high": 0.4041500267952385,
+      "wilson_ci_low": 0.017876213095072896
+    },
+    {
+      "axes": {
+        "camera": "side",
+        "perturbation": "none",
+        "task_family": "stand",
+        "terrain": "flat"
+      },
+      "cell_id": "unitree_go1/unitree_go1_joystick/camera=side,perturbation=none,task_family=stand,terrain=flat",
+      "n_trials": 10,
+      "successes": 8,
+      "wilson_ci_high": 0.9433178485456247,
+      "wilson_ci_low": 0.49016247153664183
+    },
+    {
+      "axes": {
+        "camera": "front",
+        "perturbation": "lateral_5n",
+        "task_family": "stand",
+        "terrain": "flat"
+      },
+      "cell_id": "unitree_go1/unitree_go1_joystick/camera=front,perturbation=lateral_5n,task_family=stand,terrain=flat",
+      "n_trials": 10,
+      "successes": 6,
+      "wilson_ci_high": 0.8318196702937638,
+      "wilson_ci_low": 0.31267376973365824
+    },
+    {
+      "axes": {
+        "camera": "front",
+        "perturbation": "none",
+        "task_family": "walk_forward",
+        "terrain": "flat"
+      },
+      "cell_id": "unitree_go1/unitree_go1_joystick/camera=front,perturbation=none,task_family=walk_forward,terrain=flat",
+      "n_trials": 10,
+      "successes": 8,
+      "wilson_ci_high": 0.9433178485456247,
+      "wilson_ci_low": 0.49016247153664183
+    },
+    {
+      "axes": {
+        "camera": "front",
+        "perturbation": "none",
+        "task_family": "walk_forward",
+        "terrain": "rough"
+      },
+      "cell_id": "unitree_go1/unitree_go1_joystick/camera=front,perturbation=none,task_family=walk_forward,terrain=rough",
+      "n_trials": 10,
+      "successes": 1,
+      "wilson_ci_high": 0.4041500267952385,
+      "wilson_ci_low": 0.017876213095072896
+    },
+    {
+      "axes": {
+        "camera": "side",
+        "perturbation": "none",
+        "task_family": "walk_forward",
+        "terrain": "flat"
+      },
+      "cell_id": "unitree_go1/unitree_go1_joystick/camera=side,perturbation=none,task_family=walk_forward,terrain=flat",
+      "n_trials": 10,
+      "successes": 8,
+      "wilson_ci_high": 0.9433178485456247,
+      "wilson_ci_low": 0.49016247153664183
+    },
+    {
+      "axes": {
+        "camera": "front",
+        "perturbation": "lateral_5n",
+        "task_family": "walk_forward",
+        "terrain": "flat"
+      },
+      "cell_id": "unitree_go1/unitree_go1_joystick/camera=front,perturbation=lateral_5n,task_family=walk_forward,terrain=flat",
+      "n_trials": 10,
+      "successes": 4,
+      "wilson_ci_high": 0.6873262302663417,
+      "wilson_ci_low": 0.16818032970623614
+    },
+    {
+      "axes": {
+        "camera": "front",
+        "perturbation": "none",
+        "task_family": "sidestep",
+        "terrain": "flat"
+      },
+      "cell_id": "unitree_go1/unitree_go1_joystick/camera=front,perturbation=none,task_family=sidestep,terrain=flat",
+      "n_trials": 10,
+      "successes": 9,
+      "wilson_ci_high": 0.9821237869049271,
+      "wilson_ci_low": 0.5958499732047615
+    },
+    {
+      "axes": {
+        "camera": "front",
+        "perturbation": "none",
+        "task_family": "sidestep",
+        "terrain": "rough"
+      },
+      "cell_id": "unitree_go1/unitree_go1_joystick/camera=front,perturbation=none,task_family=sidestep,terrain=rough",
+      "n_trials": 10,
+      "successes": 2,
+      "wilson_ci_high": 0.5098375284633583,
+      "wilson_ci_low": 0.05668215145437519
+    },
+    {
+      "axes": {
+        "camera": "side",
+        "perturbation": "none",
+        "task_family": "sidestep",
+        "terrain": "flat"
+      },
+      "cell_id": "unitree_go1/unitree_go1_joystick/camera=side,perturbation=none,task_family=sidestep,terrain=flat",
+      "n_trials": 10,
+      "successes": 9,
+      "wilson_ci_high": 0.9821237869049271,
+      "wilson_ci_low": 0.5958499732047615
+    },
+    {
+      "axes": {
+        "camera": "front",
+        "perturbation": "lateral_5n",
+        "task_family": "sidestep",
+        "terrain": "flat"
+      },
+      "cell_id": "unitree_go1/unitree_go1_joystick/camera=front,perturbation=lateral_5n,task_family=sidestep,terrain=flat",
+      "n_trials": 10,
+      "successes": 4,
+      "wilson_ci_high": 0.6873262302663417,
+      "wilson_ci_low": 0.16818032970623614
+    }
+  ],
+  "code_sha": "e0b26453a0a8d822dfcf007c4cdc0c0fb34eb8a5",
+  "container_digest": "",
+  "embodiment": "unitree_go1",
+  "hardware": {
+    "cuda": "unknown",
+    "driver": "580.126.20",
+    "gpu": "NVIDIA GeForce RTX 3090"
+  },
+  "model": {
+    "checkpoint_sha256": "mock:random-locomotion-policy:dim=12:bound=0.3:seed=0",
+    "family": "unknown",
+    "huggingface_revision": null,
+    "name": "random-locomotion-12dof"
+  },
+  "notes": "v0 random-policy sweep against MuJoCo Playground Go1 joystick. Random control inputs; aggregate success near zero is expected. Deliverable: pipeline absorbs a 12-DoF joint-space embodiment with no contract changes (see takehome_submission/EXTENSION.md §2).",
+  "run_id": "c177174b7975a2588ff924df6a7436a739c307b6e568d0c2489d54a8f85a0d6b",
+  "schema_version": "0.2.0",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "simulator": {
+    "auxiliary_commits": {
+      "maniskill2_real2sim": "ef7a4d4fdf4b69f2c2154db5b15b9ac8dfe10682"
+    },
+    "commit": "06accaca93535902d408da4855f21cece12bceb7",
+    "name": "simpler-env"
+  },
+  "submitter_identity": null,
+  "submitter_public_key": null,
+  "submitter_signature": null,
+  "task_name": "unitree_go1_joystick",
+  "trials_per_cell": 10
+}

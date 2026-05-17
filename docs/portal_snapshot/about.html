@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>about &mdash; eval-suite portal</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<nav>
+    <a href="/ui/" >home</a>
+    <a href="/ui/submissions" >submissions</a>
+    <a href="/ui/registry" >registry</a>
+    <a href="/ui/compare" >compare</a>
+    <a href="/ui/ledger" >ledger</a>
+    <a href="/ui/about" class="active">about</a>
+</nav>
+
+
+
+<h1>about this portal</h1>
+
+<h2>CONTRACT_VERSION = <code>1.0.0</code></h2>
+<p>
+    The contract version is the semver-versioned API surface that
+    third-party plugins target. Required <code>Policy</code> /
+    <code>Task</code> / <code>Adapter</code> / <code>Manifest</code> methods
+    are the stability surface; optional hooks
+    (<code>instruction_for</code>, <code>extract_image</code>,
+    <code>canonical_axis_map</code>, <code>can_drive</code>,
+    <code>ACTION_SPACE_HINT</code>) are not.
+</p>
+<p>
+    Source: <code>eval_suite/contracts.py</code> in the GitHub repo.
+</p>
+
+<h2>what this portal proves</h2>
+<ul>
+    <li>
+        <strong>Manifest integrity at submission.</strong> The signed manifest's content
+        hash + Ed25519 signature mean the submitter held the key and the
+        inputs they declared are bit-for-bit consistent with the recorded
+        numbers.
+    </li>
+    <li>
+        <strong>Submitter identity at submission.</strong> When the portal enforces an
+        allow-list, the submitter's claimed identity is overwritten with
+        the allow-list canonical identity &mdash; spoofing an identity string
+        the submitter doesn't have a key for fails closed.
+    </li>
+    <li>
+        <strong>Cross-device corroboration.</strong> Two distinct submitters submitting
+        the same <code>run_id</code> is recorded as independent corroboration
+        (see the corroborators section on each submission detail page).
+    </li>
+</ul>
+
+<h2>what this portal does NOT prove</h2>
+<p>
+    The ledger at <a href="/ui/ledger"><code>/ledger</code></a> is append-only
+    <strong>by convention only</strong> &mdash; the portal code only appends, never
+    rewrites. It is <strong>not</strong> cryptographically tamper-evident.
+    The portal operator could selectively rewrite or hide entries.
+    v0 proves the <em>submitter held the key</em> (Ed25519 over the manifest
+    is tamper-evident at submission time) but does <em>not</em> prove
+    <em>the ledger of accepted submissions has not been edited</em>.
+    Sigstore migration in v1 closes the second hole.
+</p>
+
+<h2>what the compare page is asserting</h2>
+<p>
+    <a href="/ui/compare">Compare</a> renders the <strong>canonical 4-dimension profile</strong>
+    (<code>language</code> / <code>visuals</code> / <code>physics</code> /
+    <code>embodiment</code>) for both runs, computed from each manifest's
+    cell payload. <strong>It does not render raw per-cell axes.</strong> That's the point:
+    runs from different task families (Google Robot vs WidowX vs Go1)
+    have different raw axes; the canonical-dim layer is what makes them
+    comparable, and is the project's central claim.
+</p>
+<p>
+    Worst-canonical-dim is the headline ranking metric: a model is judged
+    by its weakest dimension, not its average, because in deployment the
+    weakest dimension is what fails.
+</p>
+
+<h2>calibration tiers</h2>
+<p>
+    Every (model, task) result carries an A / B / C calibration tier:
+</p>
+<ul>
+    <li><strong>Tier A</strong> &mdash; paired real-robot data exists; sim and real are compared via Pearson r with confidence intervals.</li>
+    <li><strong>Tier B</strong> &mdash; published real-robot numbers exist for at least one cell; sim and real are reported side-by-side with absolute delta. No correlation claim.</li>
+    <li><strong>Tier C</strong> &mdash; no real-robot data; sim score reported alone with a "no calibration" flag.</li>
+</ul>
+<p>
+    Full definitions and the C&rarr;B&rarr;A&rarr;A+ upgrade path: see
+    <code>EXTENSION.md</code> &sect;7.
+</p>
+
+<h2>links</h2>
+<ul>
+    <li><a href="https://github.com/TeddyD-2/eval-suite">GitHub repo</a></li>
+    <li><a href="https://github.com/TeddyD-2/eval-suite/blob/main/docs/plugin_authoring.md">Plugin authoring guide</a></li>
+    <li><a href="https://github.com/TeddyD-2/eval-suite/blob/main/takehome_submission/EXTENSION.md">EXTENSION.md</a> &mdash; design doc</li>
+</ul>
+
+
+
+<footer>
+    eval-suite portal &middot; CONTRACT_VERSION = <code>1.0.0</code>
+    &middot; <a href="/ui/about">trust model</a>
+</footer>
+
+</body>
+</html>

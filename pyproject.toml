@@ -1,0 +1,51 @@
+# Repo-level tooling config only.
+#
+# The shipped distributions live under `packages/`:
+#   - packages/eval-suite-core/    — substrate (contracts, manifest, sweep, portal, conformance)
+#   - packages/eval-suite-stdlib/  — in-tree reference plugins (tasks, policies, adapters)
+#
+# Both share the `eval_suite.*` import namespace via PEP 420; pip-installing
+# them both produces one unified `eval_suite` package at import time.
+#
+# Install for development:
+#   pip install -e packages/eval-suite-core[dev] -e packages/eval-suite-stdlib
+#
+# Third-party plugins depend on `eval-suite-core` only; eval-suite-stdlib is
+# the bundled-but-replaceable reference set.
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+show_error_codes = true
+namespace_packages = true
+explicit_package_bases = true
+mypy_path = "packages/eval-suite-core/src:packages/eval-suite-stdlib/src"
+files = [
+    "packages/eval-suite-core/src/eval_suite",
+    "packages/eval-suite-stdlib/src/eval_suite",
+]
+
+[[tool.mypy.overrides]]
+module = [
+    "simpler_env.*",
+    "mani_skill2_real2sim.*",
+    "gymnasium.*",
+    "octo.*",
+    "mediapy",
+    "libero.*",
+]
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "B", "UP"]
+ignore = ["E501"]

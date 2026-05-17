@@ -1,0 +1,73 @@
+{
+  "calibration": {
+    "real_perf_source": "",
+    "real_perf_value": null,
+    "tier": "C"
+  },
+  "canonical_axis_map": {
+    "condition": "visuals"
+  },
+  "cells": [
+    {
+      "axes": {
+        "condition": "clean"
+      },
+      "cell_id": "widowx/spoon_on_towel/condition=clean",
+      "n_trials": 20,
+      "successes": 0,
+      "wilson_ci_high": 0.16112515805281938,
+      "wilson_ci_low": 0.0
+    }
+  ],
+  "code_sha": "e0b26453a0a8d822dfcf007c4cdc0c0fb34eb8a5",
+  "container_digest": "",
+  "embodiment": "widowx",
+  "hardware": {
+    "cuda": "12.4",
+    "driver": "580.126.20",
+    "gpu": "NVIDIA GeForce RTX 3090"
+  },
+  "model": {
+    "checkpoint_sha256": "d87a9a914b449a7292c0c8611ef4f3b632b06ae41273d1dadcff1c62406f405b",
+    "family": "rt1",
+    "huggingface_revision": null,
+    "name": "rt1:rt_1_x_tf_trained_for_002272480_step"
+  },
+  "notes": "v0 platform validation: RT-1-X on WidowX, clean conditions only",
+  "run_id": "36f323605b2ae90b670f4bc6cb56e8a94862e931d8f0f0d49003b5d53022bf2b",
+  "schema_version": "0.2.0",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "simulator": {
+    "auxiliary_commits": {
+      "maniskill2_real2sim": "ef7a4d4fdf4b69f2c2154db5b15b9ac8dfe10682"
+    },
+    "commit": "06accaca93535902d408da4855f21cece12bceb7",
+    "name": "simpler-env"
+  },
+  "submitter_identity": null,
+  "submitter_public_key": null,
+  "submitter_signature": null,
+  "task_name": "spoon_on_towel",
+  "trials_per_cell": 20
+}

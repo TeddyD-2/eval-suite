@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}submissions &mdash; eval-suite portal{% endblock %}
+{% block content %}
+
+<h1>submissions <a class="json-link" href="/submissions">view as JSON</a></h1>
+
+<form method="GET" action="/ui/submissions">
+    model:       <input type="text" name="model"      value="{{ filters.model }}">
+    task:        <input type="text" name="task"       value="{{ filters.task }}">
+    embodiment:  <input type="text" name="embodiment" value="{{ filters.embodiment }}">
+    submitter:   <input type="text" name="submitter"  value="{{ filters.submitter }}">
+    accepted:    <select name="accepted">
+        <option value="any" {% if filters.accepted == "any" %}selected{% endif %}>any</option>
+        <option value="yes" {% if filters.accepted == "yes" %}selected{% endif %}>yes</option>
+        <option value="no"  {% if filters.accepted == "no"  %}selected{% endif %}>no</option>
+    </select>
+    <button type="submit">filter</button>
+    <a href="/ui/submissions">clear</a>
+</form>
+
+{% if rows %}
+<table>
+    <thead><tr>
+        <th>run_id</th><th>model</th><th>robot / task</th><th>submitter</th>
+        <th>ingested</th><th>status</th><th>corroborators</th>
+    </tr></thead>
+    <tbody>
+    {% for s in rows %}
+        <tr>
+            <td><a href="/ui/submissions/{{ s.run_id }}"><code>{{ s.run_id[:16] }}&hellip;</code></a></td>
+            <td>{{ s.model_name or "&mdash;" }}</td>
+            <td>{{ s.embodiment }} / {{ s.task_name }}</td>
+            <td>{{ s.submitter_identity }}</td>
+            <td class="muted">{{ "%.0f"|format(s.ingest_ts) }}</td>
+            <td>{% if s.accepted %}&check;{% else %}<span class="warn">&times;</span>{% endif %}</td>
+            <td>{{ s.corroborators }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="pagination">
+    showing {{ start }}&ndash;{{ end }} of {{ total }}
+    {% if page > 1 %}
+        <a href="?{{ querystring_for_page(page - 1) }}">&laquo; prev</a>
+    {% else %}
+        <span class="muted">&laquo; prev</span>
+    {% endif %}
+    <span class="current">page {{ page }} of {{ total_pages }}</span>
+    {% if page < total_pages %}
+        <a href="?{{ querystring_for_page(page + 1) }}">next &raquo;</a>
+    {% else %}
+        <span class="muted">next &raquo;</span>
+    {% endif %}
+</div>
+
+{% else %}
+<p class="empty">
+    {% if has_filters %}
+        no submissions match these filters. <a href="/ui/submissions">clear filters</a>.
+    {% else %}
+        no submissions yet &mdash; POST to <code>/submit</code> to add one.
+    {% endif %}
+</p>
+{% endif %}
+
+{% endblock %}

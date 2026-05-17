@@ -1,0 +1,46 @@
+{
+  "converted_at_iso": "2026-05-16T19:34:43+00:00",
+  "decimation": {
+    "achieved_faces": 3000,
+    "target_faces": 3000
+  },
+  "mujoco_load_check": {
+    "nbody": 2,
+    "ngeom": 2,
+    "nmesh": 2
+  },
+  "outputs": {
+    "collision_hull": {
+      "faces": 548,
+      "path": "MJCF/collision_hull/boulder_hull.obj",
+      "sha256": "78566c84c79228f4da8c9473cb6bbe98a8dee448bd04d1ca727d62adb0102441",
+      "size_bytes": 17012,
+      "vertices": 276
+    },
+    "composed_mjcf": {
+      "path": "MJCF/scene.xml",
+      "sha256": "37f417e04b1cf96681582a65f05e2e3c097efdc96b4c64f0fffc32e2d28dede7",
+      "size_bytes": 616
+    },
+    "visual_mesh": {
+      "faces": 89618,
+      "path": "MJCF/visuals/Boulder.obj",
+      "sha256": "5d7329a8d290489baf3e6327f30d4b88a2c2075598b19adfdd8753f5711d6c70",
+      "size_bytes": 17413079,
+      "vertices": 46185
+    }
+  },
+  "source": {
+    "path": "source.usdc",
+    "sha256": "85dc3dfeda7484928c3ff273a2c5887b7e6a78313449bee53e2cbb50719a7239",
+    "size_bytes": 6291833
+  },
+  "tool_versions": {
+    "coacd": "1.0.11",
+    "fast_simplification": "0.1.13",
+    "mujoco": "3.8.1",
+    "python": "3.10.12",
+    "trimesh": "4.12.2",
+    "usd-core": "26.5"
+  }
+}

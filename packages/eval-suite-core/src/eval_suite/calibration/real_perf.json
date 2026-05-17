@@ -1,0 +1,90 @@
+{
+  "_schema_version": "0.5.0",
+  "_doc": "Real-robot performance reference registry. Each entry is one (task, model) → published real-world success rate, with provenance. v0 ships this registry seeded from the SimplerEnv paper (Table 3, Table 4). v2 grows the file from customer deployment telemetry — see EXTENSION.md §4 for the C→B→A→A+ tier upgrade rules.",
+  "entries": [
+    {
+      "task_key": "google_robot_pick_coke_can",
+      "model_key": "rt-1-converged",
+      "value": 0.853,
+      "n_trials": null,
+      "source": "SimplerEnv paper Table 3",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "Everyday Robots Google Robot (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": "Aggregate across all conditions evaluated in the published real-robot run."
+    },
+    {
+      "task_key": "google_robot_pick_coke_can",
+      "model_key": "rt-1-x",
+      "value": 0.760,
+      "n_trials": null,
+      "source": "SimplerEnv paper Table 3",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "Everyday Robots Google Robot (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": ""
+    },
+    {
+      "task_key": "google_robot_pick_coke_can",
+      "model_key": "octo-base",
+      "value": 0.293,
+      "n_trials": null,
+      "source": "SimplerEnv paper Table 3",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "Everyday Robots Google Robot (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": "v0 tier-B headline calibration data point. Compared to sim 0.298 (Octo-base, 24-cell VA base subset) → delta +0.5pp."
+    },
+    {
+      "task_key": "google_robot_move_near",
+      "model_key": "rt-1-converged",
+      "value": 0.633,
+      "n_trials": null,
+      "source": "SimplerEnv paper Table 3",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "Everyday Robots Google Robot (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": ""
+    },
+    {
+      "task_key": "google_robot_move_near",
+      "model_key": "octo-base",
+      "value": 0.350,
+      "n_trials": null,
+      "source": "SimplerEnv paper Table 3",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "Everyday Robots Google Robot (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": ""
+    },
+    {
+      "task_key": "widowx_spoon_on_towel",
+      "model_key": "octo-base",
+      "value": 0.477,
+      "n_trials": null,
+      "source": "SimplerEnv paper Table 4",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "WidowX Bridge setup (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": ""
+    },
+    {
+      "task_key": "widowx_spoon_on_towel",
+      "model_key": "rt-1-x",
+      "value": 0.000,
+      "n_trials": null,
+      "source": "SimplerEnv paper Table 4",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "WidowX Bridge setup (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": "RT-1-X doesn't transfer to WidowX out of the box."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual envs
+.venv/
+.venv-*/
+venv/
+env/
+
+# Build artifacts
+build/
+dist/
+*.whl
+
+# OS / editor / agent
+.DS_Store
+.idea/
+.vscode/
+.claude/
+CLAUDE.md
+
+# Eval outputs (large, machine-specific)
+results/
+results_simple_eval/
+results_simple_random_eval/
+smoke_logs/
+videos/
+*.mp4
+# Exception: curated demo videos under docs/ ARE committed.
+!docs/curated_videos/*.mp4
+!docs/screen_recording.mp4
+# Exception: curated demo videos under takehome/media/ ARE committed.
+!takehome/media/*.mp4
+
+# Local-only archives of old sweep dirs (some tarballs exceed GitHub's
+# 100MB per-file limit; keep them on-disk for re-render if needed but
+# don't track them).
+archive/
+
+# Model checkpoints (downloaded from upstream, never checked in)
+checkpoints/
+
+# Manifests are tracked separately under manifests/ — see harness layout
+# (do not gitignore manifests/)
+
+# Local-only: original takehome prompt (kept on disk for reference, not
+# checked in).
+takehome/prompt.md
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log

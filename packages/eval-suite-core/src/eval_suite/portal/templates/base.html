@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}eval-suite portal{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<nav>
+    <a href="/ui/" {% if active == "home" %}class="active"{% endif %}>home</a>
+    <a href="/ui/submissions" {% if active == "submissions" %}class="active"{% endif %}>submissions</a>
+    <a href="/ui/registry" {% if active == "registry" %}class="active"{% endif %}>registry</a>
+    <a href="/ui/compare" {% if active == "compare" %}class="active"{% endif %}>compare</a>
+    <a href="/ui/ledger" {% if active == "ledger" %}class="active"{% endif %}>ledger</a>
+    <a href="/ui/about" {% if active == "about" %}class="active"{% endif %}>about</a>
+</nav>
+
+{% block content %}{% endblock %}
+
+<footer>
+    eval-suite portal &middot; CONTRACT_VERSION = <code>{{ contract_version }}</code>
+    &middot; <a href="/ui/about">trust model</a>
+</footer>
+
+</body>
+</html>

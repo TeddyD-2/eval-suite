@@ -1,0 +1,68 @@
+name: docker-build
+
+# Validates the Dockerfile actually builds end-to-end. This box (a
+# RunPod container) can't run docker-in-docker without privileged
+# mode, so the only place the image gets exercised is on GitHub
+# hosted runners (which DO ship dockerd). Build only — no push for
+# v0; pushing to GHCR is v1 work per the roadmap in takehome/EXTENSION.md.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "Dockerfile"
+      - "packages/**"
+      - "pyproject.toml"
+      - ".github/workflows/docker.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "Dockerfile"
+      - "packages/**"
+      - "pyproject.toml"
+      - ".github/workflows/docker.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: docker-${{ github.ref }}
+  # Cancel in-progress PR builds (cheap to redo). Let main-branch builds
+  # finish — the verified runner-disk-fix build is now ~19 min, and
+  # cancelling a near-complete main build to start another from cold
+  # cache is anti-economy. main-branch back-to-back pushes will queue.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  build:
+    name: docker build
+    runs-on: ubuntu-22.04
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # The image is ~6-8 GB after extracting all of TF + JAX-CUDA12 +
+      # the nvidia/cuda base. Hosted Ubuntu runners only have ~14 GB
+      # free on / out of the box, which doesn't fit the layer tree
+      # during build. Free ~30 GB by removing preinstalled toolchains
+      # we don't use (dotnet, Android SDK, GHC, CodeQL).
+      - name: Free disk space on runner
+        run: |
+          echo "=== before ==="; df -h /
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          sudo docker image prune --all --force >/dev/null 2>&1 || true
+          echo "=== after ==="; df -h /
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Build only — no push for v0. The image is big (~6-8GB
+      # decompressed) and has heavy GPU deps; pushing to GHCR is v1
+      # work per takehome/EXTENSION.md.
+      - name: Build image (no push)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          tags: evalsuite:ci-${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

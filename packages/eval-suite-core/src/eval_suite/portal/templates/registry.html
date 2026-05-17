@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}plugin registry &mdash; eval-suite portal{% endblock %}
+{% block content %}
+
+<h1>plugin registry</h1>
+<p class="muted">
+    Plugins installed in the portal's Python environment. Third-party
+    packages register their <code>Task</code> / <code>Policy</code> /
+    <code>Adapter</code> under the <code>eval_suite.tasks</code> /
+    <code>policies</code> / <code>adapters</code> entry-point groups in
+    their <code>pyproject.toml</code>.
+</p>
+
+<h2 id="tasks">tasks <a class="json-link" href="/registry/tasks">view as JSON</a></h2>
+{% if tasks %}
+<table>
+    <thead><tr><th>name</th><th>package</th><th>entry-point ref</th></tr></thead>
+    <tbody>
+    {% for t in tasks %}
+        <tr>
+            <td><code>{{ t.name }}</code></td>
+            <td>{{ t.package_name }}@{{ t.package_version }}</td>
+            <td><code>{{ t.entry_point_ref }}</code></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="empty">no tasks installed.</p>
+{% endif %}
+
+<h2 id="policies">policies <a class="json-link" href="/registry/policies">view as JSON</a></h2>
+{% if policies %}
+<table>
+    <thead><tr><th>name</th><th>package</th><th>entry-point ref</th></tr></thead>
+    <tbody>
+    {% for p in policies %}
+        <tr>
+            <td><code>{{ p.name }}</code></td>
+            <td>{{ p.package_name }}@{{ p.package_version }}</td>
+            <td><code>{{ p.entry_point_ref }}</code></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="empty">no policies installed.</p>
+{% endif %}
+
+<h2 id="adapters">adapters <a class="json-link" href="/registry/adapters">view as JSON</a></h2>
+{% if adapters %}
+<table>
+    <thead><tr><th>name</th><th>package</th><th>entry-point ref</th></tr></thead>
+    <tbody>
+    {% for a in adapters %}
+        <tr>
+            <td><code>{{ a.name }}</code></td>
+            <td>{{ a.package_name }}@{{ a.package_version }}</td>
+            <td><code>{{ a.entry_point_ref }}</code></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="empty">no adapters installed.</p>
+{% endif %}
+
+{% if failed %}
+<h2 id="failed" class="warn">failed to enumerate</h2>
+<p class="muted">
+    These plugins are declared as entry-points but the metadata lookup
+    raised. Usually means a corrupt egg-info / dist-info or a missing
+    optional dependency.
+</p>
+<table>
+    <thead><tr><th>group</th><th>name</th><th>error</th></tr></thead>
+    <tbody>
+    {% for f in failed %}
+        <tr>
+            <td>{{ f.group }}</td>
+            <td><code>{{ f.name }}</code></td>
+            <td class="warn">{{ f.error }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock %}

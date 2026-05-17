@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eval-suite-stdlib"
+version = "0.1.0"
+description = "eval-suite reference plugins: in-tree Tasks (SimplerEnv, LIBERO, Unitree Go1, USD scan, mock), Policies (SimplerEnv VLAs, random locomotion, mock), Adapters (gym, MuJoCo Playground). Structurally identical to a third-party plugin; bundled because the contract has to be proven on something."
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Teddy Duncker", email = "teddyduncker@gmail.com" }]
+readme = "README.md"
+
+dependencies = [
+    "eval-suite-core>=0.1",
+    "numpy>=1.24,<2.0",
+]
+
+[project.entry-points."eval_suite.tasks"]
+google_robot_pick_coke_can = "eval_suite.tasks.simpler_env:GoogleRobotPickCokeCan"
+widowx_spoon_on_towel      = "eval_suite.tasks.simpler_env:WidowXSpoonOnTowel"
+unitree_go1_joystick       = "eval_suite.tasks.unitree_go1:UnitreeGo1Joystick"
+libero_spatial             = "eval_suite.tasks.libero:LIBEROSpatial"
+namaqualand_scan           = "eval_suite.tasks.usd_scan:NamaqualandScanTask"
+mock                       = "eval_suite.tasks.mock:MockTask"
+
+[project.entry-points."eval_suite.policies"]
+simpler_env       = "eval_suite.policies.simpler_env:SimplerEnvPolicy"
+random_locomotion = "eval_suite.policies.random_locomotion:RandomLocomotionPolicy"
+mock              = "eval_suite.policies.mock:MockPolicy"
+
+[project.entry-points."eval_suite.adapters"]
+gym               = "eval_suite.adapters.gym:GymAdapter"
+mujoco_playground = "eval_suite.adapters.mujoco_playground:MujocoPlaygroundAdapter"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["eval_suite*"]
+namespaces = true

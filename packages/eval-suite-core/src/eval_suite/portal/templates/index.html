@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}eval-suite portal &mdash; home{% endblock %}
+{% block content %}
+
+<h1>eval-suite portal</h1>
+<p class="muted">
+    A reporting contract for robot foundation models. Submit a sealed manifest;
+    others can verify, corroborate, and compare it.
+</p>
+
+<h2>Installed plugins</h2>
+<table>
+    <thead><tr><th>group</th><th>count</th><th></th></tr></thead>
+    <tbody>
+        <tr><td>tasks</td>     <td>{{ counts.tasks }}</td>     <td><a href="/ui/registry#tasks">view</a></td></tr>
+        <tr><td>policies</td>  <td>{{ counts.policies }}</td>  <td><a href="/ui/registry#policies">view</a></td></tr>
+        <tr><td>adapters</td>  <td>{{ counts.adapters }}</td>  <td><a href="/ui/registry#adapters">view</a></td></tr>
+        {% if counts.failed > 0 %}
+        <tr><td class="warn">failed</td><td class="warn">{{ counts.failed }}</td><td><a href="/ui/registry#failed">view</a></td></tr>
+        {% endif %}
+    </tbody>
+</table>
+
+<h2>Recent submissions</h2>
+{% if recent %}
+<table>
+    <thead><tr><th>run_id</th><th>model</th><th>robot / task</th><th>submitter</th><th>status</th></tr></thead>
+    <tbody>
+    {% for s in recent %}
+        <tr>
+            <td><a href="/ui/submissions/{{ s.run_id }}"><code>{{ s.run_id[:16] }}&hellip;</code></a></td>
+            <td>{{ s.model_name or "&mdash;" }}</td>
+            <td>{{ s.embodiment }} / {{ s.task_name }}</td>
+            <td>{{ s.submitter_identity }}</td>
+            <td>{% if s.accepted %}&check;{% else %}<span class="warn">&times; {{ s.reject_reason or "" }}</span>{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<p><a href="/ui/submissions">view all submissions &rarr;</a></p>
+{% else %}
+<p class="empty">no submissions yet &mdash; POST to <code>/submit</code> to add one.</p>
+{% endif %}
+
+{% endblock %}

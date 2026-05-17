@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>plugin registry &mdash; eval-suite portal</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<nav>
+    <a href="/ui/" >home</a>
+    <a href="/ui/submissions" >submissions</a>
+    <a href="/ui/registry" class="active">registry</a>
+    <a href="/ui/compare" >compare</a>
+    <a href="/ui/ledger" >ledger</a>
+    <a href="/ui/about" >about</a>
+</nav>
+
+
+
+<h1>plugin registry</h1>
+<p class="muted">
+    Plugins installed in the portal's Python environment. Third-party
+    packages register their <code>Task</code> / <code>Policy</code> /
+    <code>Adapter</code> under the <code>eval_suite.tasks</code> /
+    <code>policies</code> / <code>adapters</code> entry-point groups in
+    their <code>pyproject.toml</code>.
+</p>
+
+<h2 id="tasks">tasks <a class="json-link" href="/registry/tasks">view as JSON</a></h2>
+
+<table>
+    <thead><tr><th>name</th><th>package</th><th>entry-point ref</th></tr></thead>
+    <tbody>
+    
+        <tr>
+            <td><code>google_robot_pick_coke_can</code></td>
+            <td>eval-suite@0.1.0</td>
+            <td><code>eval_suite.tasks.simpler_env:GoogleRobotPickCokeCan</code></td>
+        </tr>
+    
+        <tr>
+            <td><code>libero_spatial</code></td>
+            <td>eval-suite@0.1.0</td>
+            <td><code>eval_suite.tasks.libero:LIBEROSpatial</code></td>
+        </tr>
+    
+        <tr>
+            <td><code>mock</code></td>
+            <td>eval-suite@0.1.0</td>
+            <td><code>eval_suite.tasks.mock:MockTask</code></td>
+        </tr>
+    
+        <tr>
+            <td><code>unitree_go1_joystick</code></td>
+            <td>eval-suite@0.1.0</td>
+            <td><code>eval_suite.tasks.unitree_go1:UnitreeGo1Joystick</code></td>
+        </tr>
+    
+        <tr>
+            <td><code>widowx_spoon_on_towel</code></td>
+            <td>eval-suite@0.1.0</td>
+            <td><code>eval_suite.tasks.simpler_env:WidowXSpoonOnTowel</code></td>
+        </tr>
+    
+        <tr>
+            <td><code>household_mock</code></td>
+            <td>eval-suite-plugin-demo@0.1.0</td>
+            <td><code>plugin_demo.household_task:HouseholdMockTask</code></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+
+<h2 id="policies">policies <a class="json-link" href="/registry/policies">view as JSON</a></h2>
+
+<table>
+    <thead><tr><th>name</th><th>package</th><th>entry-point ref</th></tr></thead>
+    <tbody>
+    
+        <tr>
+            <td><code>mock</code></td>
+            <td>eval-suite@0.1.0</td>
+            <td><code>eval_suite.policies.mock:MockPolicy</code></td>
+        </tr>
+    
+        <tr>
+            <td><code>random_locomotion</code></td>
+            <td>eval-suite@0.1.0</td>
+            <td><code>eval_suite.policies.random_locomotion:RandomLocomotionPolicy</code></td>
+        </tr>
+    
+        <tr>
+            <td><code>simpler_env</code></td>
+            <td>eval-suite@0.1.0</td>
+            <td><code>eval_suite.policies.simpler_env:SimplerEnvPolicy</code></td>
+        </tr>
+    
+        <tr>
+            <td><code>industrial_arm_mock</code></td>
+            <td>eval-suite-plugin-demo@0.1.0</td>
+            <td><code>plugin_demo.industrial_policy:IndustrialArmMockPolicy</code></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+
+<h2 id="adapters">adapters <a class="json-link" href="/registry/adapters">view as JSON</a></h2>
+
+<table>
+    <thead><tr><th>name</th><th>package</th><th>entry-point ref</th></tr></thead>
+    <tbody>
+    
+        <tr>
+            <td><code>gym</code></td>
+            <td>eval-suite@0.1.0</td>
+            <td><code>eval_suite.adapters.gym:GymAdapter</code></td>
+        </tr>
+    
+        <tr>
+            <td><code>mujoco_playground</code></td>
+            <td>eval-suite@0.1.0</td>
+            <td><code>eval_suite.adapters.mujoco_playground:MujocoPlaygroundAdapter</code></td>
+        </tr>
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<footer>
+    eval-suite portal &middot; CONTRACT_VERSION = <code>1.0.0</code>
+    &middot; <a href="/ui/about">trust model</a>
+</footer>
+
+</body>
+</html>

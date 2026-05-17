@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}submission {{ run_id_short }} &mdash; eval-suite portal{% endblock %}
+{% block content %}
+
+<h1>submission <code>{{ run_id_short }}</code>
+    <a class="json-link" href="/submissions/{{ manifest.run_id }}">view as JSON</a>
+</h1>
+
+<p>
+    <a href="/submissions/{{ manifest.run_id }}" download="manifest.json">[download raw manifest.json]</a>
+    &middot;
+    <a href="/ui/compare?a={{ manifest.run_id }}">[compare with &hellip;]</a>
+</p>
+
+<h2>summary</h2>
+<table>
+    <tbody>
+        <tr><td>model</td><td><code>{{ manifest.model.name }}</code></td></tr>
+        <tr><td>checkpoint</td><td><code>{{ checkpoint_truncated }}</code></td></tr>
+        <tr><td>embodiment</td><td>{{ manifest.embodiment }}</td></tr>
+        <tr><td>task</td><td><code>{{ manifest.task_name }}</code></td></tr>
+        <tr><td>simulator</td><td>{{ manifest.simulator.name }} @ <code>{{ manifest.simulator.commit[:12] }}</code></td></tr>
+        <tr><td>hardware</td><td>{{ manifest.hardware.gpu }}, CUDA {{ manifest.hardware.cuda }}, driver {{ manifest.hardware.driver }}</td></tr>
+        <tr><td>trials per cell</td><td>{{ manifest.trials_per_cell }}</td></tr>
+        <tr><td>total cells</td><td>{{ manifest.cells|length }}</td></tr>
+        <tr><td>contract_version</td><td>{{ contract_version_str }}</td></tr>
+        <tr><td>eval-suite version</td><td>{{ eval_suite_version_str }}</td></tr>
+        <tr><td>accepted</td><td>{% if submission.accepted %}yes{% else %}<span class="warn">no &mdash; {{ submission.reject_reason or "" }}</span>{% endif %}</td></tr>
+    </tbody>
+</table>
+
+<h2>integrity</h2>
+{% if verify_ok %}
+<p><code>Manifest.verify()</code>: <strong>True</strong>
+   <span class="muted">(content hash matches; signature, if present, valid)</span></p>
+{% else %}
+<p class="warn"><code>Manifest.verify()</code>: <strong>False</strong> &mdash;
+   manifest fails verification (content hash mismatch or signature invalid).</p>
+{% endif %}
+
+<h2>canonical generalization profile</h2>
+<table>
+    <thead><tr>
+        <th>dim</th><th>mean</th><th>95% CI</th><th>cells</th><th>trials</th>
+    </tr></thead>
+    <tbody>
+    {% for dim in dims %}
+    {% set r = canonical_profile.per_dim[dim] %}
+    <tr>
+        <td>
+            {{ dim }}
+            {% if dim == canonical_profile.worst_dim_name %}<span class="worst">&starf; worst</span>{% endif %}
+        </td>
+        {% if r.n_cells == 0 %}
+            <td colspan="4" class="muted">not measured</td>
+        {% else %}
+            <td>{{ "%.3f"|format(r.mean) }}</td>
+            <td>[{{ "%.3f"|format(r.wilson_ci_low) }}, {{ "%.3f"|format(r.wilson_ci_high) }}]</td>
+            <td>{{ r.n_cells }}</td>
+            <td>{{ r.n_trials }}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<h2>per-axis means</h2>
+{% if per_axis %}
+<table>
+    <thead><tr><th>axis</th><th>levels</th><th>mean per level</th></tr></thead>
+    <tbody>
+    {% for axis, levels in per_axis.items() %}
+        <tr>
+            <td><code>{{ axis }}</code></td>
+            <td>{{ levels|length }}</td>
+            <td>
+            {% for lvl, mean in levels.items() %}
+                <code>{{ lvl }}</code>={{ "%.2f"|format(mean) }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="empty">no per-axis breakdown (only one cell).</p>
+{% endif %}
+
+<h2>per-cell results</h2>
+<table>
+    <thead><tr>
+        <th>cell</th><th>axes</th><th>n</th><th>s</th><th>rate</th><th>95% CI</th>
+    </tr></thead>
+    <tbody>
+    {% for c in manifest.cells %}
+    <tr>
+        <td><code>{{ c.cell_id[:48] }}</code></td>
+        <td class="muted">{{ c.axes }}</td>
+        <td>{{ c.n_trials }}</td>
+        <td>{{ c.successes }}</td>
+        <td>{{ "%.2f"|format(c.successes / c.n_trials if c.n_trials else 0) }}</td>
+        <td>[{{ "%.2f"|format(c.wilson_ci_low) }}, {{ "%.2f"|format(c.wilson_ci_high) }}]</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<h2>corroborators ({{ corroborators|length }})</h2>
+{% if corroborators|length > 1 %}
+<table>
+    <thead><tr><th>submitter</th><th>public key</th><th>ingested</th><th>accepted</th></tr></thead>
+    <tbody>
+    {% for c in corroborators %}
+        <tr>
+            <td>{{ c.submitter_identity }}</td>
+            <td><code>{{ c.submitter_pk[:16] }}&hellip;</code></td>
+            <td class="muted">{{ "%.0f"|format(c.ingest_ts) }}</td>
+            <td>{% if c.accepted %}&check;{% else %}<span class="warn">&times;</span>{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="empty">no cross-device corroboration yet; only this submitter has attested to this run_id.</p>
+{% endif %}
+
+{# v1: render plugin_provenance.json contents here when submitted alongside manifest #}
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}ledger &mdash; eval-suite portal{% endblock %}
+{% block content %}
+
+<h1>submission ledger <a class="json-link" href="/ledger">view as raw JSONL</a></h1>
+
+<p class="muted">
+    Append-only by convention &mdash; the portal code only appends, never rewrites.
+    <strong>Not</strong> cryptographically tamper-evident. The portal operator
+    could selectively rewrite or hide entries. Sigstore migration in v1
+    closes this hole. See <a href="/ui/about">about</a> for the full trust model.
+</p>
+
+{% if entries %}
+<table>
+    <thead><tr>
+        <th>ts</th><th>run_id</th><th>submitter</th><th>public key</th><th>accepted</th><th>reason</th>
+    </tr></thead>
+    <tbody>
+    {% for e in entries %}
+        <tr>
+            <td class="muted">{{ "%.0f"|format(e.ts) }}</td>
+            <td><a href="/ui/submissions/{{ e.run_id }}"><code>{{ e.run_id[:16] }}&hellip;</code></a></td>
+            <td>{{ e.submitter_identity }}</td>
+            <td><code>{{ e.submitter_pk[:16] }}&hellip;</code></td>
+            <td>{% if e.accepted %}&check;{% else %}<span class="warn">&times;</span>{% endif %}</td>
+            <td class="muted">{{ e.reject_reason or "" }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="empty">ledger is empty.</p>
+{% endif %}
+
+{% endblock %}
