@@ -1,0 +1,23 @@
+{
+  "schema_version": "0.1.0",
+  "scene_transform": {
+    "up_axis": "z",
+    "meters_per_unit": 1.0,
+    "world_origin": [0.0, 0.0, 0.0]
+  },
+  "named_regions": [
+    {
+      "name": "behind_truck",
+      "shape": "box",
+      "pos": [3.0, 0.0, 0.3],
+      "size": [0.5, 0.5, 0.3]
+    }
+  ],
+  "spawn_points": [
+    {
+      "name": "go1_start",
+      "pos": [0.0, 0.0, 0.3],
+      "quat": [1.0, 0.0, 0.0, 0.0]
+    }
+  ]
+}

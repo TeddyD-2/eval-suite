@@ -16,12 +16,26 @@ dependencies = [
     "numpy>=1.24,<2.0",
 ]
 
+[project.optional-dependencies]
+# v1 Gaussian-splat → MJCF ingest pipeline. Pure-Python deps live here;
+# the heavy GPU stacks (SuGaR, Nerfstudio) have churning CUDA pins and
+# are documented in `eval_suite/ingest/splat/README.md` rather than
+# hard-pinned. The convert pipeline calls them via subprocess and
+# records commit SHAs in `convert_log.json` for provenance.
+splat = [
+    "trimesh>=4.0",
+    "fast-simplification>=0.1",
+    "scipy>=1.11",
+    "manifold3d>=2.5",
+]
+
 [project.entry-points."eval_suite.tasks"]
 google_robot_pick_coke_can = "eval_suite.tasks.simpler_env:GoogleRobotPickCokeCan"
 widowx_spoon_on_towel      = "eval_suite.tasks.simpler_env:WidowXSpoonOnTowel"
 unitree_go1_joystick       = "eval_suite.tasks.unitree_go1:UnitreeGo1Joystick"
 libero_spatial             = "eval_suite.tasks.libero:LIBEROSpatial"
 namaqualand_scan           = "eval_suite.tasks.usd_scan:NamaqualandScanTask"
+tnt_truck_splat            = "eval_suite.tasks.parametric_splat:tnt_truck_splat_task_factory"
 mock                       = "eval_suite.tasks.mock:MockTask"
 
 [project.entry-points."eval_suite.policies"]

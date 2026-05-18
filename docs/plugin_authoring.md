@@ -48,6 +48,7 @@ Several capabilities are opt-in. eval-suite discovers them via `getattr` and fal
 - `Task.instruction_for(env)` — return a per-cell language instruction.
 - `Task.extract_image(env, obs)` — return an RGB image for video capture.
 - `Task.canonical_axis_map: dict[str, CanonicalDim]` — map cell axis names to the four canonical buckets (`"language"`, `"visuals"`, `"physics"`, `"embodiment"`) so the four-bucket profile chart works for your Task.
+- `Task.success_criterion: dict[str, Any]` — declarative success predicate for the task, as a `{"kind": str, "params": dict[str, scalar]}` dict. The sweep driver reads this at seal time and binds it into the manifest's `success_criterion` field (schema 0.3.0). Changing the predicate on the same scene produces a distinct `run_id` — the property that lets a non-developer adopter configure goal definitions for splat-captured environments without registering a new Task. Built-in predicates live in `eval_suite.tasks._success_predicates` (`Survived`, `RobotReachedRegion`, `MaintainedClearance`). Tasks whose env returns `success` from `env.step()` directly (the v0 Namaqualand / SimplerEnv pattern) leave this attribute absent; the field stays `None` in the manifest and is omitted from the canonical-JSON hash.
 - `Task.ACTION_SPACE_HINT: Literal["eef_7dof", "joint_target", "custom"]` — coarse hint for the pre-flight compatibility check.
 - `Adapter.can_drive(policy, task) -> CompatibilityReport` — pre-flight compatibility check. Conservative: `ok=True` means "no known reason to refuse," not a guarantee.
 

@@ -1,0 +1,12 @@
+{
+  "_comment": "Source provenance for the Tanks-and-Temples Truck Gaussian-splat checkpoint. The convert pipeline verifies the on-disk source.ply SHA256 against expected_sha256 and refuses to run on mismatch. expected_sha256 must be filled in by the maintainer who first runs the conversion locally — published splat zoos do not commit to stable URLs over time. license_url is the original Tanks-and-Temples CC-BY 4.0 distribution; the pretrained splat (if used) inherits this license.",
+  "source_name": "tnt_truck_gaussian_splat",
+  "source_url": "https://example.invalid/replace-with-stable-mirror/tnt_truck_splat.ply",
+  "expected_sha256": "fill-in-from-first-local-conversion-run",
+  "license": "CC-BY-4.0",
+  "license_url": "https://www.tanksandtemples.org/license/",
+  "scene_dataset": "tanks_and_temples",
+  "scene_name": "Truck",
+  "splat_format": "ply",
+  "expected_size_bytes_range": [50000000, 400000000]
+}

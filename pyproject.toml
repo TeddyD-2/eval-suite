@@ -39,6 +39,18 @@ module = [
     "octo.*",
     "mediapy",
     "libero.*",
+    # v1 splat-ingest deps. Heavy GPU-adjacent tooling with no py.typed
+    # markers; the substrate calls them via lazy imports inside functions.
+    # `mujoco` and `mujoco_playground` follow the pre-existing per-line
+    # `# type: ignore[import-not-found]` pattern in usd_scan.py /
+    # unitree_go1.py — adding them to the module override here would
+    # invalidate those per-line markers.
+    "trimesh",
+    "trimesh.*",
+    "manifold3d",
+    "manifold3d.*",
+    "fast_simplification",
+    "fast_simplification.*",
 ]
 ignore_missing_imports = true
 

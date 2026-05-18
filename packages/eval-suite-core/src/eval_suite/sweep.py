@@ -279,6 +279,17 @@ def run_sweep(
     canonical_map_raw = getattr(task, "canonical_axis_map", {}) or {}
     canonical_map: dict[str, str] = {str(k): str(v) for k, v in dict(canonical_map_raw).items()}
 
+    # Capture the Task's declarative success criterion (schema 0.3.0+).
+    # Tasks whose env returns success directly from `env.step()` (e.g.
+    # Namaqualand) don't declare this; the field stays None and is
+    # omitted from the manifest's canonical-JSON payload.
+    success_criterion_raw = getattr(task, "success_criterion", None)
+    success_criterion: dict[str, Any] | None
+    if success_criterion_raw is None:
+        success_criterion = None
+    else:
+        success_criterion = dict(success_criterion_raw)
+
     manifest = Manifest(
         schema_version=SCHEMA_VERSION,
         code_sha=code_sha,
@@ -294,6 +305,7 @@ def run_sweep(
         calibration=calibration or CalibrationRef(tier="C"),
         notes=notes or f"python={platform.python_version()}",
         canonical_axis_map=canonical_map,
+        success_criterion=success_criterion,
     )
     manifest.seal()
     manifest_path.write_text(manifest.to_json())

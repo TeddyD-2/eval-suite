@@ -20,15 +20,27 @@ from .hashing import canonical_json, hash_dict
 from .signing import sign as _sign
 from .signing import verify as _verify
 
-SCHEMA_VERSION = "0.2.0"
+SCHEMA_VERSION = "0.3.0"
 
-# Schema 0.2.0 binds the Task's `canonical_axis_map` into the content
-# hash so a published profile is provably linked to the mapping that
-# produced it. Manifests at schema 0.1.0 continue to verify under their
-# old rules — `_hashable_payload` dispatches on schema_version so any
-# legacy 0.1.0 manifest still passes `verify()` byte-identically.
+# Schema 0.2.0 added `canonical_axis_map` to the hashed payload so a
+# published profile is provably linked to the mapping that produced it.
+# Schema 0.3.0 adds `success_criterion` so a parametric scene re-evaluated
+# under a different declarative goal produces a distinct run_id (the
+# factory-engineer wedge: change the predicate, get a new run_id, no
+# new Task subclass needed). `_hashable_payload` dispatches per-feature
+# on the version-set membership so old manifests continue to verify
+# byte-identically under the rules that produced their run_id.
 
+# Schemas that predate `canonical_axis_map` in the hashed payload.
+# DO NOT add 0.2.0 here — that would change 0.2.0 hashing semantics.
 _LEGACY_SCHEMAS = frozenset({"0.1.0"})
+
+# Schemas that predate `success_criterion` in the hashed payload.
+# Both 0.1.0 and 0.2.0 are listed: the field is omitted from the hash
+# (and from `_hashable_payload`) for these schemas regardless of whether
+# the dataclass field is set, so loading a pre-0.3.0 manifest still
+# produces its original run_id.
+_SCHEMAS_WITHOUT_SUCCESS_CRITERION = frozenset({"0.1.0", "0.2.0"})
 
 
 @dataclass(frozen=True)
@@ -110,6 +122,19 @@ class Manifest:
     # 0.2.0+; 0.1.0 manifests exclude it (back-compat — see
     # `_hashable_payload`).
     canonical_axis_map: dict[str, str] = field(default_factory=dict)
+    # Task's declarative success criterion at sweep time, as a registry
+    # entry like {"kind": "robot_reached_region",
+    # "params": {"region_name": "behind_truck", "tolerance": 0.5}}.
+    # Bound into the content hash so two sweeps of the same scene with
+    # different goals (e.g. reach_region vs maintain_clearance_from)
+    # produce distinct run_ids. None for Tasks whose env returns success
+    # from `env.step()` directly (current Namaqualand / SimplerEnv
+    # semantics) — when None, the field is OMITTED from the canonical
+    # JSON so a 0.3.0 manifest without a declared criterion hashes
+    # byte-identically to a 0.3.0 JSON that omits the key entirely.
+    # Only included in the hash for schema 0.3.0+ (see
+    # `_SCHEMAS_WITHOUT_SUCCESS_CRITERION`).
+    success_criterion: dict[str, Any] | None = None
 
     def _hashable_payload(self) -> dict[str, Any]:
         """The dict that gets hashed for run_id.
@@ -117,16 +142,31 @@ class Manifest:
         Always excludes `run_id` and the submitter_* fields (signature is
         computed AFTER seal() so it can sign over the canonical contents).
 
-        For schema 0.1.0 manifests, additionally excludes `canonical_axis_map`
-        — it didn't exist in the 0.1.0 hashing rules and a 0.1.0 manifest
-        with an empty map should still verify byte-identically against
-        its original run_id.
+        Per-feature legacy dispatch keeps each pre-existing schema verifying
+        byte-identically under its original rules:
+
+          - Schema 0.1.0: excludes `canonical_axis_map` AND
+            `success_criterion`.
+          - Schema 0.2.0: includes `canonical_axis_map`, excludes
+            `success_criterion`.
+          - Schema 0.3.0+: includes both. `success_criterion=None` is
+            omitted from the canonical JSON (not serialized as `null`),
+            so a 0.3.0 manifest with the default value hashes
+            byte-identically to a 0.3.0 JSON that doesn't carry the key.
+
+        `asdict()` emits `None` as JSON `null`, NOT as an omitted key —
+        the explicit `.pop("success_criterion", None)` is what produces
+        omitted-key semantics.
         """
         payload = asdict(self)
         for k in ("run_id", "submitter_signature", "submitter_public_key", "submitter_identity"):
             payload.pop(k, None)
         if self.schema_version in _LEGACY_SCHEMAS:
             payload.pop("canonical_axis_map", None)
+        if self.schema_version in _SCHEMAS_WITHOUT_SUCCESS_CRITERION:
+            payload.pop("success_criterion", None)
+        elif self.success_criterion is None:
+            payload.pop("success_criterion", None)
         return payload
 
     def seal(self) -> Manifest:
@@ -203,4 +243,5 @@ class Manifest:
             submitter_public_key=obj.get("submitter_public_key"),
             submitter_identity=obj.get("submitter_identity"),
             canonical_axis_map=dict(obj.get("canonical_axis_map", {})),
+            success_criterion=obj.get("success_criterion"),
         )

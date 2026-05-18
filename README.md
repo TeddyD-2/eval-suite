@@ -96,7 +96,7 @@ Enforced sandboxing for submitted policies is documented but not yet enforced. R
 
 Trial counts are sized for shape discrimination, not for per-cell significance. Twenty trials per cell is what fits on the single RTX 3090 this was prototyped on while leaving room to iterate on the rest of the system. It's enough to tell that one model's worst axis is lighting and another's is distractors; it is not enough to claim that a five-point gap on one cell between two models is real. Scaling to a hundred trials per cell requires multi-GPU sweep parallelism and a GPU-parallel simulator backend (ManiSkill3); both are named in the roadmap.
 
-Generating tasks from real-world 3D Gaussian-splat scans is the bigger missing piece. v0 runs on existing benchmark tasks; the splat pipeline is being prototyped now and lands in v1 as a single environment proof, then accumulates into a contributor-driven library of real-deployment tasks in v2. This is what turns the suite from "reporting layer on top of existing benchmarks" into "benchmark whose tasks come from real environments."
+Generating tasks from real-world 3D Gaussian-splat scans is the bigger missing piece. v0 runs on existing benchmark tasks; v1 ships the splat ingest pipeline as a stdlib plugin behind the `[splat]` extra — `python -m eval_suite.ingest.splat ingest <ply> --scene-metadata <json> --scene-extractions <json>` turns a splat checkpoint into a composed MJCF with declarative `NamedRegion` + `SpawnPoint` + `ExtractedBody` annotations and a `scene_transform` for mesh-to-MuJoCo alignment. The accompanying `ParametricSplatTask` couples that scene with a declarative success predicate (`RobotReachedRegion`, `MaintainedClearance`, `Survived`) bound into the manifest at schema 0.3.0, so a factory engineer captures their warehouse, picks a predicate from a library, and runs a sweep — no new Task subclass, no manifest schema editing. The v1 demo asset under `assets/tnt_truck_splat/` is the Tanks-and-Temples "Truck" scene (CC-BY 4.0, commercial-friendly per EXTENSION.md §6's partner-pilot path); the 9-cell sweep evaluates "did Go1 reach behind the truck under variant lighting/camera." v2 turns this into a contributor-driven library of real-deployment tasks.
 
 Cross-task aggregation under the canonical generalization dimensions (combining a "language" score across multiple tasks into one cross-task language number) is deferred. The current per-task profile is fine; pooling cells across different tasks requires either a deployment-relevance weighting or a stratified bootstrap that respects the per-task structure, and either is a meaningful design choice that should be made with care rather than retrofitted.
 
@@ -136,16 +136,19 @@ eval-suite/
 │   └── eval-suite-stdlib/                        # IN-TREE PLUGINS — structurally identical to a 3rd-party plugin
 │       ├── pyproject.toml                        #   declares the `eval_suite.{tasks,policies,adapters}`
 │       └── src/eval_suite/                       #   entry-points the in-tree code is registered under
-│           ├── tasks/                            # GoogleRobotPickCokeCan, WidowXSpoonOnTowel,
-│           │                                     #   LIBEROSpatial, UnitreeGo1Joystick, NamaqualandScanTask, MockTask
+│           ├── tasks/                            # GoogleRobotPickCokeCan, WidowXSpoonOnTowel, LIBEROSpatial,
+│           │                                     #   UnitreeGo1Joystick, NamaqualandScanTask, ParametricSplatTask,
+│           │                                     #   MockTask; declarative success-predicate registry
 │           ├── policies/                         # SimplerEnvPolicy (Octo + RT-1), RandomLocomotionPolicy, MockPolicy
-│           └── adapters/                         # GymAdapter, MujocoPlaygroundAdapter
+│           ├── adapters/                         # GymAdapter, MujocoPlaygroundAdapter
+│           └── ingest/                           # asset-ingest plugins behind optional extras
+│               └── splat/                        #   Gaussian-splat → MJCF pipeline (`[splat]` extra: trimesh, manifold3d, ...)
 │
 ├── takehome/                                     # EXTENSION.md (design doc) + profile.ipynb + reviewer media
 ├── tests/                                        # contract tests; ruff + mypy --strict + pytest in CI
 ├── examples/external_plugin_demo/                # sibling pip package — depends on eval-suite-core ONLY
 ├── scripts/                                      # run_full_sweep.sh, run_go1_sweep.py, bench_amortization.py
-├── assets/                                       # USD/MJCF source assets (Namaqualand boulder scan, etc.)
+├── assets/                                       # source + converted assets: namaqualand_scan (USD), tnt_truck_splat (GS)
 ├── docs/                                         # plugin_authoring.md, curated rollout videos, portal HTML snapshot
 ├── manifests/                                    # archived manifests from prior sweeps for verify() tests
 ├── results/                                      # sweep output dirs (gitignored; shape documented in CLAUDE.md)
