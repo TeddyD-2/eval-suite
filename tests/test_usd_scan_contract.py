@@ -1,5 +1,11 @@
 """End-to-end v0 contract: NamaqualandScanTask + AssetProvenance sidecar.
 
+**In plain words.** Pins down that a real-world scan flows
+end-to-end through the unchanged sweep pipeline and that the
+asset provenance sidecar correctly binds to the run's
+fingerprint. The "real captures plug in here" promise rests on
+this test passing.
+
 Asserts:
 1. NamaqualandScanTask (via the mock factory) satisfies the Task Protocol.
 2. The optional Adapter hooks (`instruction_for`, `extract_image`) are present.

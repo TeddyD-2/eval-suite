@@ -1,5 +1,15 @@
 """Sim-to-real calibration statistics.
 
+**In plain words.** This is the math behind the calibration claim.
+Given a list of sim success rates and a matching list of real-world
+success rates, it computes how strongly they agree — and how
+uncertain that agreement number is (the bootstrap CI). It also
+computes MMRV, a separate measure that catches the case where two
+trajectories end at the same outcome but reach it via completely
+different motions. Together the two metrics answer "does sim
+predict real?" honestly.
+
+
 Two metrics, two regimes:
 
   - **Outcome-level Pearson r** (per-task-model): correlation of

@@ -1,5 +1,10 @@
 """Tests for `eval_suite.ingest.splat.extract` — the boolean mesh ops.
 
+**In plain words.** Pins down the carve-out math on synthetic
+shapes that CI can build. The "real splat mesh" gate is skipped
+in CI; a maintainer flips it on by hand before each release after
+running the heavy converter on a sample scene.
+
 CI-runnable tests use synthetic meshes (cubes). The real-mesh gate
 (`test_cut_region_on_real_tnt_truck_mesh`) is `pytest.skip`-guarded on
 the converted-mesh artifact, which is produced by an out-of-CI GPU

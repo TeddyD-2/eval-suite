@@ -1,6 +1,13 @@
 """Thin-slice demo: a ROS 2 lifecycle node refuses to deploy a policy
 whose eval-suite profile doesn't clear a deployer-set bar.
 
+**In plain words.** Shows the admission-gate end of the suite in
+action: load a fixture profile, run two gates against it (one
+strict, one relaxed), and watch the strict one print refusal
+reasons while the relaxed one passes. This is the deployment-time
+trust contract every other piece of the suite plugs into.
+
+
 This script doesn't actually start rclpy (the demo is the gate, not the
 ROS 2 plumbing). It loads a fixture manifest, evaluates two gates
 against it, and prints the refusal reasons in the strict case + the

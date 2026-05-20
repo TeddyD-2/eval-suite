@@ -139,25 +139,41 @@ eval-suite/
 │   │       ├── registry.py                       # entry-points-based plugin discovery
 │   │       ├── conformance/                      # library plugin authors call from their pytest
 │   │       ├── portal/                           # FastAPI submission portal + browsable UI
-│   │       └── calibration/real_perf.json        # published real-robot reference data (package data)
+│   │       └── calibration/                      # statistics.py (Pearson r + bootstrap CI, MMRV),
+│   │                                             #   paired_trials.py (paired_trials.json sidecar),
+│   │                                             #   real_perf.json (published real-robot reference data)
 │   │
-│   └── eval-suite-stdlib/                        # IN-TREE PLUGINS — structurally identical to a 3rd-party plugin
-│       ├── pyproject.toml                        #   declares the `eval_suite.{tasks,policies,adapters}`
-│       └── src/eval_suite/                       #   entry-points the in-tree code is registered under
-│           ├── tasks/                            # GoogleRobotPickCokeCan, WidowXSpoonOnTowel, LIBEROSpatial,
-│           │                                     #   UnitreeGo1Joystick, NamaqualandScanTask, ParametricSplatTask,
-│           │                                     #   MockTask; declarative success-predicate registry
-│           ├── policies/                         # SimplerEnvPolicy (Octo + RT-1), RandomLocomotionPolicy, MockPolicy
-│           ├── adapters/                         # GymAdapter, MujocoPlaygroundAdapter
-│           └── ingest/                           # asset-ingest plugins behind optional extras
-│               └── splat/                        #   Gaussian-splat → MJCF pipeline (`[splat]` extra: trimesh, manifold3d, ...)
+│   ├── eval-suite-stdlib/                        # IN-TREE PLUGINS — structurally identical to a 3rd-party plugin
+│   │   ├── pyproject.toml                        #   declares the `eval_suite.{tasks,policies,adapters}`
+│   │   └── src/eval_suite/                       #   entry-points the in-tree code is registered under
+│   │       ├── tasks/                            # GoogleRobotPickCokeCan, WidowXSpoonOnTowel, LIBEROSpatial,
+│   │       │                                     #   UnitreeGo1Joystick, NamaqualandScanTask, ParametricSplatTask,
+│   │       │                                     #   MockTask; declarative success-predicate registry
+│   │       ├── policies/                         # SimplerEnvPolicy (Octo + RT-1), RandomLocomotionPolicy,
+│   │       │                                     #   LeRobotPolicy, OXEReplayPolicy, MockPolicy
+│   │       ├── adapters/                         # GymAdapter, MujocoPlaygroundAdapter
+│   │       └── ingest/                           # asset-ingest plugins behind optional extras
+│   │           ├── splat/                        #   Gaussian-splat → MJCF (`[splat]` extra: trimesh, manifold3d, ...)
+│   │           ├── rgbd/                         #   RGB-D capture → MJCF via Open3D TSDF fusion (`[rgbd]` extra)
+│   │           └── objaverse/                    #   Objaverse-XL asset fetch (license-gated) → MJCF (`[objaverse]` extra)
+│   │
+│   └── eval-suite-ros2/                          # ROS 2 DEPLOYMENT BRIDGE — wraps any Policy as an rclpy
+│       ├── pyproject.toml                        #   lifecycle node; TopicSpec + ProfileGate admission control
+│       ├── config/topic_specs/                   #   reference YAMLs: widowx_bridge, unitree_go1, franka_panda
+│       └── src/eval_suite/ros2/
+│           ├── topic_spec.py                     # declarative obs/action ↔ ROS 2 topic mapping (signed sidecar)
+│           ├── policy_node.py                    # rclpy.lifecycle.Node wrapping any eval_suite.Policy
+│           └── gate.py                           # ProfileGate — refuses ACTIVE when profile fails deployer bar
 │
 ├── takehome/                                     # EXTENSION.md (design doc) + profile.ipynb + reviewer media
 ├── tests/                                        # contract tests; ruff + mypy --strict + pytest in CI
-├── examples/external_plugin_demo/                # sibling pip package — depends on eval-suite-core ONLY
+├── examples/                                     # calibration_pickcoke_rt1, gate_smolvla_deployment,
+│                                                 #   lerobot_smolvla_pickcoke, namaqualand_sweep,
+│                                                 #   external_plugin_demo (sibling pip package, core-only deps)
 ├── scripts/                                      # run_full_sweep.sh, run_go1_sweep.py, bench_amortization.py
 ├── assets/                                       # source + converted assets: namaqualand_scan (USD), tnt_truck_splat (GS)
-├── docs/                                         # plugin_authoring.md, curated rollout videos, portal HTML snapshot
+├── docs/                                         # plugin_authoring.md, real_to_sim.md, ros2_deployment.md,
+│                                                 #   calibration_writeup.md
 ├── manifests/                                    # archived manifests from prior sweeps for verify() tests
 ├── results/                                      # sweep output dirs (gitignored; shape documented in CLAUDE.md)
 ├── submissions/                                  # portal submission store (gitignored; written by the portal at runtime)

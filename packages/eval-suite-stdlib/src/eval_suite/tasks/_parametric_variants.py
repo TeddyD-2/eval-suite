@@ -1,5 +1,12 @@
 """Lighting and camera variants for ParametricSplatTask cells.
 
+**In plain words.** The catalog of "how can I vary the scene" knobs
+for a splat-derived task — three lighting setups and three camera
+angles, each tagged with the distribution shift it's meant to
+probe. A user can pick any subset (or write their own) to define
+the cell grid for their own scanned scene.
+
+
 Each variant has a named hypothesis (per EXTENSION.md §3's
 "silent re-bucketing is auditable" rule — every axis level should map
 to a deliberate distribution shift, not a magic number).

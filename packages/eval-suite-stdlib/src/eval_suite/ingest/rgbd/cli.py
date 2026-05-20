@@ -1,4 +1,10 @@
-"""`python -m eval_suite.ingest rgbd <frames_dir> --output-dir <dir> ...` CLI."""
+"""`python -m eval_suite.ingest rgbd <frames_dir> --output-dir <dir> ...` CLI.
+
+**In plain words.** The user-facing command that runs the RGB-D
+fusion. Hands the frames folder to `fuse.py` and writes the
+resulting MJCF artifact alongside a `convert_log.json` so the run
+is reproducible.
+"""
 
 from __future__ import annotations
 

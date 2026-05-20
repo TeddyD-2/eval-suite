@@ -1,5 +1,16 @@
 """Asset provenance sidecar.
 
+**In plain words.** When a task's simulator scene comes from a
+real-world scan — a Gaussian splat, an RGB-D capture, an Objaverse
+download — this file is the paper trail that says "the scene the
+robot saw came from these specific source files, converted by these
+specific tools, licensed under these specific terms." It sits next
+to the run's manifest as `asset_provenance.json` so anyone reviewing
+the run can trace the simulated environment all the way back to the
+real-world source, and so a tampered or substituted asset is
+detectable.
+
+
 Sits **alongside** `manifest.json` in the sweep output directory and
 records the source assets (e.g. USD scans, converted MJCF, mesh files,
 intermediate artifacts) that fed the run. Deliberately *not* part of

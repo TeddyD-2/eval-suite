@@ -1,5 +1,15 @@
 """Sim-to-real calibration substrate.
 
+**In plain words.** Sim numbers only matter to a deployer if they
+track real-world numbers. This sub-package is where that comparison
+lives: it loads published real-robot data, pairs it cell-by-cell with
+sim data from a sealed manifest, and reports a real correlation
+coefficient (Pearson r) with a confidence interval — plus a
+trajectory-level metric (MMRV) for when sim outcomes match but the
+motions don't. The calibration tier on a profile (C → B → A → A+) is
+backed by what this code actually computes, not just by a tag.
+
+
 The v1 substrate already shipped a tier-tagged registry of published
 real-robot reference numbers (`real_perf.json` + `analysis.py
 ::calibration_overlay`). v2 Phase 3 adds the *statistics layer* the

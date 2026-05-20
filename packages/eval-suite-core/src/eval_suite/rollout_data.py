@@ -1,5 +1,14 @@
 """Per-rollout data storage.
 
+**In plain words.** Every individual rollout (one model, one
+condition, one seed) writes a small self-contained folder to disk:
+the video, the per-step actions and rewards, and a metadata file
+describing the exact conditions. This is what lets a reviewer pull
+up a single failure case in isolation — share one folder, anybody
+can replay the video and inspect the trajectory without needing the
+whole sweep.
+
+
 Each rollout becomes a self-contained directory next to the sealed
 manifest:
 

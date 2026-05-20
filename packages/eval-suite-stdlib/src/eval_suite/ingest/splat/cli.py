@@ -1,5 +1,12 @@
 """One-command splat ingest CLI.
 
+**In plain words.** The user types one command pointing at their
+`.ply` splat file and an annotation JSON; this file orchestrates
+the SuGaR / Nerfstudio subprocess, the mesh decimation, the
+boolean carve-outs, and the MJCF composition, dropping the final
+sim-ready folder where they asked for it.
+
+
 Usage:
   python -m eval_suite.ingest.splat ingest \\
     <splat.ply> \\

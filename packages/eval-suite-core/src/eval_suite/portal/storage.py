@@ -1,5 +1,15 @@
 """File-based submission registry.
 
+**In plain words.** When someone submits a result to the portal, this
+file is what writes it to disk and looks it up later. The storage
+layer is deliberately plain folders and JSON files (no database) so
+the whole submission archive is something a maintainer can `tar`,
+`git`, or `rsync` to a backup without any special tooling. Two
+different labs submitting the *same* run independently land
+side-by-side under the same `run_id` folder — that's the "cross-lab
+corroboration" signal the suite is designed to expose.
+
+
 The portal accepts signed manifests and writes them to a directory
 tree keyed by `(run_id, submitter_pk)` so the same `run_id` can be
 submitted by multiple submitters (the Cross-device corroboration

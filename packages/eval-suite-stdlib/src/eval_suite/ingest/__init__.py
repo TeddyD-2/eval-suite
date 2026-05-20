@@ -1,5 +1,15 @@
 """Asset-ingest plugins for the eval-suite stdlib.
 
+**In plain words.** This is the "real world in, sim scene out" entry
+point of the suite. A user has a 3D scan (Gaussian splat), a depth
+camera capture (RGB-D frames), or a downloaded public 3D asset
+(Objaverse); the sub-packages here convert any of those into a
+sim-ready MJCF artifact that the suite's tasks can sweep
+unchanged. Heavy converter dependencies live behind optional pip
+extras so the core install stays small.
+
+
+
 Subpackages here turn third-party asset formats (Gaussian splats, USD scans,
 URDFs, etc.) into MJCF scenes the existing Adapters can consume. They live
 in `eval-suite-stdlib`, not in `eval-suite-core`, so the core contract has

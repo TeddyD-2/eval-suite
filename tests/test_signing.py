@@ -1,4 +1,10 @@
-"""Manifest signing contract — v0 attestation."""
+"""Manifest signing contract — v0 attestation.
+
+**In plain words.** Pins down that the Ed25519 signature on a
+manifest actually verifies, and that tampering with the manifest
+breaks the verification. If this ever fails, anyone can forge a
+submission's attribution.
+"""
 
 from __future__ import annotations
 

@@ -1,5 +1,15 @@
 """Manifest signing — Ed25519 submitter attestation.
 
+**In plain words.** This is the suite's signature pad. When a lab
+submits a result, they sign the receipt (the manifest) with a private
+key only they hold; anyone reading the result later can use the
+matching public key to confirm that the signed number really came from
+that lab and hasn't been edited on the way in. Without this layer,
+"this is Berkeley's result" would be unverifiable; with it, a forged
+submission stops being credible the moment somebody checks the
+signature.
+
+
 Uses Ed25519 (curve25519-edwards) from `cryptography` because it's:
 - Built into a widely-trusted library (no rolling our own crypto).
 - Small (32-byte keys, 64-byte signatures, well under JSON size limits).

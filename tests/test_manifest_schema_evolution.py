@@ -1,5 +1,10 @@
 """Schema-evolution contract tests for the 0.2.0 → 0.3.0 transition.
 
+**In plain words.** Every old manifest ever produced by the suite
+must keep verifying after a schema upgrade. This test pins old
+fixtures so anyone who tries to "improve" the hashing rules has
+their PR blocked the moment the change breaks past results.
+
 The 0.3.0 bump adds `Manifest.success_criterion` to support declarative
 goal definitions for splat scenes (factory engineer writes a region +
 picks a predicate; no new Task subclass). The bump is only safe to

@@ -1,5 +1,10 @@
 """v0 canonical-taxonomy contract.
 
+**In plain words.** Pins down the four canonical dimensions
+(language, visuals, physics, embodiment) and the rule that a task
+silently re-bucketing axes changes the run_id (so the change is
+auditable). The honest-reporting contract rests on this test.
+
 Covers:
 1. Closed-enum CanonicalDim — task `canonical_axis_map` declarations
    only use the 4 allowed dim names.

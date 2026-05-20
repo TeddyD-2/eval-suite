@@ -1,5 +1,10 @@
 """v0 registry contract tests.
 
+**In plain words.** Pins down that the plugin discovery system
+finds plugins without importing them, tolerates broken ones, and
+resolves ambiguous names safely. If this breaks, `python -m
+eval_suite.cli --help` could start pulling in TensorFlow.
+
 Covers:
 - Listing returns the in-tree plugins without loading them (lazy-load).
 - A broken plugin doesn't kill the listing call.

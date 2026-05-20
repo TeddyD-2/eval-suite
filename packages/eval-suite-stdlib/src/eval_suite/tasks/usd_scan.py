@@ -1,5 +1,14 @@
 """NamaqualandScanTask — v0 real-world scan ingestion demo.
 
+**In plain words.** This task drops a photogrammetric scan of a real
+boulder into a Go1 simulator scene and runs the locomotion sweep
+against the result. It's the proof that the suite can take a
+real-world capture (here, a free CC0 scan from Poly Haven) and
+evaluate a policy against it through unchanged contract code —
+which is the precondition for the splat / RGB-D ingest pipelines
+that turn user-supplied real-world scans into benchmark tasks.
+
+
 Wraps the converted Poly Haven Namaqualand Boulder 05 scan (see
 `assets/namaqualand_scan/` and `assets/namaqualand_scan/convert.py`) as
 a single-cell Task driven through the existing v0

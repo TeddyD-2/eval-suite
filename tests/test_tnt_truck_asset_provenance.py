@@ -1,5 +1,11 @@
 """Asset-provenance tests for the TNT Truck splat demo's sidecar.
 
+**In plain words.** Pins down the paper trail for the v1 splat
+demo scene — every source and converted file is fingerprinted,
+tampering is detected, license fields are preserved. If this
+ever fails, a future "did this scene come from where you said it
+did?" audit can't be trusted.
+
 Mirrors the Namaqualand provenance tests at
 tests/test_usd_scan_contract.py:106-176 but binds against the splat
 sidecar shape (scene_metadata + scene_extractions + composed MJCF +

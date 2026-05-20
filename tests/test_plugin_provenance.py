@@ -1,5 +1,9 @@
 """v0 plugin-provenance sidecar contract tests.
 
+**In plain words.** Pins down the "which pip packages produced
+this run" sidecar. A future reviewer can trust the paper trail
+because the tamper-detection here works.
+
 Covers:
 - Sidecar serializes + round-trips through JSON.
 - Unsigned sidecar verifies True.

@@ -1,5 +1,10 @@
 """RGB-D ingester contract tests.
 
+**In plain words.** Pins down that the RGB-D path is wired
+correctly and (with Open3D installed) actually fuses synthetic
+frames into a mesh. Without these, a user's first encounter with a
+broken RGB-D ingester would be a runtime failure on their own data.
+
 These don't require Open3D to be installed for the basic checks. The
 actual TSDF-fusion path is gated on the [rgbd] extra; a synthetic
 end-to-end test runs only when open3d is available.

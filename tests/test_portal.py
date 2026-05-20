@@ -1,4 +1,10 @@
-"""Portal end-to-end contract — POST /submit, GET /submissions, GET /<id>."""
+"""Portal end-to-end contract — POST /submit, GET /submissions, GET /<id>.
+
+**In plain words.** Pins down the public-facing submission flow:
+a lab POSTs a signed manifest, it lands in the store, it shows
+back up in the list. The portal is how the suite's results
+become URLs the rest of the world can read.
+"""
 
 from __future__ import annotations
 

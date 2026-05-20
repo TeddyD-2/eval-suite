@@ -1,5 +1,12 @@
 """Splat → static-mesh → composed-MJCF conversion pipeline.
 
+**In plain words.** This is the actual conversion engine. Stage one
+runs an external GPU tool (SuGaR or Nerfstudio) as a subprocess to
+turn the splat into a polygon mesh; stage two simplifies and hulls
+it; stage three composes the mesh + annotations into the final
+MJCF file the simulator loads.
+
+
 Two functions:
 
   - `splat_to_static_mesh(splat_ply, output_dir, target_faces=3000)` —

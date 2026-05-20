@@ -1,5 +1,11 @@
 """ProfileGate contract tests.
 
+**In plain words.** Pins down the rule that a policy with a weak
+profile cannot be ACTIVE'd on a real robot. Every gate clause
+(worst dim, calibration tier, required dimensions, paired Pearson
+r, family allowlist) gets exercised. If this ever fails, the
+deployment-admission contract is no longer trustworthy.
+
 The gate is the thin slice: a deployer-set YAML bar the eval-suite
 profile must clear before a ROS 2 lifecycle node will activate. Tests
 exercise every clause + at least one combined refusal.

@@ -1,5 +1,11 @@
 """MockTask — synthetic env that the CI contract test runs against.
 
+**In plain words.** A pretend task with a one-cell test grid and a
+toy environment. It exists so the CI tests can sweep something
+end-to-end without needing any simulator installed. Catches plumbing
+bugs in the sweep loop in seconds, not minutes.
+
+
 Returns a tiny gymnasium-like env that the Adapter can drive without any
 real simulator. The env counts steps and reports `success=False` after a
 fixed horizon. Sufficient to verify: Adapter steps, Action flattening

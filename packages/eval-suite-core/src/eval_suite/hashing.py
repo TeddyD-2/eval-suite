@@ -1,4 +1,13 @@
-"""SHA256 helpers for content-addressing manifests and checkpoint trees."""
+"""SHA256 helpers for content-addressing manifests and checkpoint trees.
+
+**In plain words.** This is the suite's "fingerprint machine." Feed it
+any pile of bytes (a JSON manifest, a model checkpoint, a converted
+mesh) and it gives back a short, unique tag. If two fingerprints match,
+the bytes are guaranteed to be identical; if any byte changed
+anywhere, the fingerprint changes too. Everything in the suite that
+claims "this is the same run" or "this asset hasn't been tampered
+with" is anchored on this one file.
+"""
 
 from __future__ import annotations
 

@@ -1,5 +1,16 @@
 """Manifest dataclass — every input that could change a result.
 
+**In plain words.** When you run an evaluation, this is the receipt the
+suite hands you back. It records every ingredient that could possibly
+have affected the numbers — which code version, which simulator, which
+model checkpoint, which seeds, which hardware — and turns the whole
+thing into one unique fingerprint called the `run_id`. If somebody else
+shows up later with a different set of numbers from "the same run,"
+the fingerprint instantly proves whether the inputs actually matched.
+The manifest is what makes the suite's promise of "byte-identical
+reproducibility" mean something.
+
+
 The manifest is the reproducibility deliverable: shipped alongside the
 results CSV, anyone with the manifest can verify that a rerun on the
 same inputs would produce a byte-identical hash.

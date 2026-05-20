@@ -1,5 +1,15 @@
 """ROS 2 lifecycle node that wraps any eval_suite.Policy.
 
+**In plain words.** This is the actual ROS 2 node that runs on a
+real robot. It loads the policy through the eval-suite registry
+(same plugin system as the sim sweep), subscribes to the camera
+and state topics named in the TopicSpec, calls the policy each
+tick, and publishes the resulting action to the configured command
+topic. A watchdog stops it if observations go stale, and per-axis
+workspace bounds clip out-of-range commands. Refusal-on-activate
+delegates to `ProfileGate`.
+
+
 Runtime behavior:
 
   on_configure:

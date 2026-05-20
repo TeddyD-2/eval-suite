@@ -1,5 +1,13 @@
 """Gaussian-splat → MJCF ingest pipeline.
 
+**In plain words.** The original real-to-sim path. A user captures
+a real environment with a phone or camera, trains a Gaussian splat
+(a recent 3D-scene format), and feeds the result here; the
+pipeline turns it into a sim-ready 3D scene the suite's tasks can
+sweep against. This is what turns "I scanned my warehouse" into a
+benchmark.
+
+
 End-to-end: a Gaussian-splat `.ply` checkpoint plus declarative
 annotations become a composed MJCF scene the existing
 `MujocoPlaygroundAdapter` can drive.

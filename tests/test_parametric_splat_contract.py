@@ -1,5 +1,12 @@
 """ParametricSplatTask contract tests (CI-runnable via the mock factory).
 
+**In plain words.** Pins down the v1 splat-task generator end to
+end: any combination of axes + predicates produces a sweepable
+task, the predicate flows into the manifest as part of the
+fingerprint, and changing the predicate really does produce a
+different run_id. This is the test that protects the factory-
+engineer wedge.
+
 Covers Protocol compliance, cell-grid decode, canonical-axis mapping,
 success-criterion serialization, sweep-end-to-end through the existing
 `MujocoPlaygroundAdapter`, and the substrate determinism property

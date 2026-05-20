@@ -1,5 +1,13 @@
 """Quick benchmark: does TF/JAX compile amortize across trials in one process?
 
+**In plain words.** The script that timed how much faster
+subsequent trials are after the first one has paid for the
+model-loading and graph-compilation costs. The answer it
+returned — about 50–70% faster for trials 2+ — is why the sweep
+driver keeps the model alive across all (cell, seed) pairs in a
+sweep instead of restarting per cell.
+
+
 Hypothesis: trial 1 dominated by compile (~30-40s), trials 2+ are short
 (~5-15s steady state). If true, sweep CLI must keep the policy live for
 all N trials per cell. If not, we need a different approach.

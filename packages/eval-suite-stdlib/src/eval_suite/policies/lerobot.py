@@ -1,5 +1,15 @@
 """LeRobotPolicy — wraps a LeRobot-formatted policy as an eval-suite `Policy`.
 
+**In plain words.** The HuggingFace LeRobot project has become the
+de-facto place where robotics groups publish their pretrained policy
+checkpoints — `lerobot/smolvla-base`, `lerobot/pi0`, ACT, Diffusion.
+This file is what lets the suite evaluate any of them by name,
+without anyone having to write a custom wrapper per checkpoint. A
+user types `--policy lerobot --policy-arg repo_id=lerobot/smolvla-base`
+and the suite picks the model up off the Hub and drives it through
+the full sweep.
+
+
 LeRobot (the HuggingFace project, not the dataset spec) distributes
 pretrained policy checkpoints via the HF Hub (`lerobot/smolvla-base`,
 `lerobot/pi0`, ACT/Diffusion variants, etc.). Each checkpoint is loaded

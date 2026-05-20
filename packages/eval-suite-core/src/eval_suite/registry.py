@@ -1,5 +1,14 @@
 """Plugin registry.
 
+**In plain words.** This is how new pieces — a task, a model, a
+simulator bridge — get into the suite without anyone editing the
+suite's own source code. A third-party package declares itself in its
+`pyproject.toml` ("here is a task named X"); after `pip install`, this
+file notices it and the CLI lists it alongside the built-in ones. The
+suite is *extendable by installing pip packages*, not by forking the
+repo, and that promise is implemented here.
+
+
 Discovery of installed plugins via Python's standard `importlib.metadata`
 entry-points. Three groups:
 

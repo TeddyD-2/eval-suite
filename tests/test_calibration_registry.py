@@ -1,4 +1,10 @@
-"""Calibration registry contract — v0 JSON file format."""
+"""Calibration registry contract — v0 JSON file format.
+
+**In plain words.** Pins down the shape of `real_perf.json` (the
+published real-robot numbers the suite ships with). If this test
+ever fails, the calibration overlay in the notebook and the
+calibration demo can't trust the registry anymore.
+"""
 
 from __future__ import annotations
 

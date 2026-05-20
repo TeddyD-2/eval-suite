@@ -1,5 +1,13 @@
 """Reference external eval-suite plugin.
 
+**In plain words.** A standalone pip package that lives outside the
+suite's own repo but plugs into it through the same entry-points
+mechanism every third-party plugin would use. It's the load-bearing
+demonstration that the architecture isn't pretending: a stranger
+can write their own task or model, `pip install` it, and the
+suite's CLI will list and drive it next to the in-tree ones.
+
+
 Demonstrates the v0 plugin substrate:
 
 - `HouseholdMockTask` — a Task with kitchen / pantry / living-room cell

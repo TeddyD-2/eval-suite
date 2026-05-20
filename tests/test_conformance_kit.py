@@ -1,5 +1,10 @@
 """v0 conformance kit self-test.
 
+**In plain words.** Proves the suite passes its own conformance
+kit. If a third-party plugin author runs the kit against their
+code, they get the same verdicts the in-tree code gets.
+
+
 Runs `full_battery(MockTask, MockPolicy, GymAdapter, tmp_path)` to
 prove eval-suite is its own first plugin: every helper in the
 conformance kit works against the in-tree reference implementations.

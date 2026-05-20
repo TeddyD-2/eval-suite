@@ -1,5 +1,13 @@
 """Unitree Go1 quadruped tasks via MuJoCo Playground (v0 sweep).
 
+**In plain words.** The legged-robot task — a Unitree Go1 quadruped
+on a 12-cell grid (three behaviors × four condition variants: flat,
+rough, side-camera, lateral perturbation). It's the proof that the
+suite isn't quietly arm-only: legged control has completely
+different actions and observations, but the same sweep, manifest,
+and analysis pipeline handles it without modification.
+
+
 What this file ships:
 - `UnitreeGo1Joystick` — the v0 legged Task: 12-cell variant grid
   (3 task families × {baseline / rough / side_camera / perturbation}) on

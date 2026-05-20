@@ -1,5 +1,10 @@
 """Schema + canonical-JSON tests for `eval_suite.ingest.splat.annotation`.
 
+**In plain words.** Pins down the on-disk schema for the
+declarative scene annotations (regions, spawn points, scene
+transform, extracted bodies). A non-developer adopter who edits a
+JSON should never see a confusing parsing error.
+
 These are CI-runnable (no MuJoCo, no splat tools, no GPU): the
 annotation layer is the "always-works" piece of the splat substrate.
 """

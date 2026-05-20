@@ -1,6 +1,12 @@
 """End-to-end v0 contract: MujocoPlaygroundAdapter + Go1 Task +
 RandomLocomotionPolicy + Manifest, with a MockGo1Env so it runs on CI.
 
+**In plain words.** Pins down the legged side of the suite from
+end to end — joint-space actions, MJX-style observations, the same
+manifest pipeline. If this test ever fails, the suite has
+quietly become arm-only.
+
+
 Asserts:
 1. JointAction flattens to a 12-dim ndarray and passes env.step()'s shape check.
 2. run_sweep() drives the joint-space rollout, emits CSV with same schema.

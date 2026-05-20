@@ -1,5 +1,14 @@
 """PairedTrial sidecar — the on-disk artifact for trajectory-level calibration.
 
+**In plain words.** When a partner lab pairs a sim rollout with a real
+recorded rollout of the same condition, this is the file that captures
+the pairing on disk — both trajectories' identities, the MMRV score
+between them, and a signature so the pairing is auditable. It lives
+next to the sweep's manifest as `paired_trials.json` and is what the
+calibration tier upgrade from "tier B" (one real number) to "tier A"
+(trajectory-paired data) is anchored on.
+
+
 A `paired_trials.json` lives next to a sweep's `manifest.json`. Each
 entry pairs one sim rollout (referenced by run_id + cell_id + seed)
 with one real-side trajectory (referenced by an opaque

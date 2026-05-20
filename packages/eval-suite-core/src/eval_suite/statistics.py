@@ -1,4 +1,13 @@
-"""Per-cell statistics — Wilson CIs and per-axis aggregation."""
+"""Per-cell statistics — Wilson CIs and per-axis aggregation.
+
+**In plain words.** When a paper reports "60% success" you can't tell
+whether that came from 6 wins out of 10 trials (very noisy) or 60 out
+of 100 (much more solid). This file is what turns a count of wins and
+trials into an honest 95% confidence interval — the bracket that says
+"the true success rate is somewhere in this range." Every per-cell
+number the suite reports goes through this file so the reader can see
+how shaky or solid each number actually is.
+"""
 
 from __future__ import annotations
 

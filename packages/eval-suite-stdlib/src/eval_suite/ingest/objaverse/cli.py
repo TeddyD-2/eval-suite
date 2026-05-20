@@ -1,5 +1,9 @@
 """`python -m eval_suite.ingest objaverse <uid> --output-dir <dir> ...` CLI.
 
+**In plain words.** The user-facing command that runs the Objaverse
+fetch + convert. One asset ID in, one MJCF scene out.
+
+
 Fetches one Objaverse-XL asset, converts the .glb to OBJ via trimesh,
 and emits the MJCF artifact shape via the existing splat-pipeline
 `compose_with_annotations` (so `ParametricSplatTask` consumes the

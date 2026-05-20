@@ -1,5 +1,9 @@
 """Sim-to-real calibration statistics tests.
 
+**In plain words.** If this test ever fails, the headline
+calibration number the suite reports (`Pearson r = +0.875 [+0.733,
++0.970]`) is suspect — the math producing it is broken.
+
 Pearson r + bootstrap CI + MMRV — the substrate the tier-A and
 tier-A+ rules in EXTENSION.md §4 rest on.
 """

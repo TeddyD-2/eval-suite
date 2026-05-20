@@ -1,5 +1,14 @@
 """Conformance kit.
 
+**In plain words.** This is the "is my plugin actually compatible?"
+checker for plugin authors. Anyone writing a new task, model, or
+simulator bridge calls these helpers from their own test suite to
+confirm their code satisfies the suite's four Protocols *before* they
+publish their pip package. Without this kit, plugin authors would
+discover incompatibilities at run time on someone else's machine;
+with it, they catch them on their own `pytest` run.
+
+
 Plugin authors call these helpers from their own pytest suites to
 confirm their Task / Policy / Adapter satisfies the eval-suite
 Protocols before publishing. The library shape (vs. a CLI tool) is

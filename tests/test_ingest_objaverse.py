@@ -1,4 +1,9 @@
-"""Objaverse ingester contract tests."""
+"""Objaverse ingester contract tests.
+
+**In plain words.** Pins down that the license allowlist actually
+blocks unlisted-license assets *before* a download happens, and
+that the dispatcher correctly hands off to the Objaverse path.
+"""
 
 from __future__ import annotations
 

@@ -1,4 +1,10 @@
-"""paired_trials.json sidecar contract tests."""
+"""paired_trials.json sidecar contract tests.
+
+**In plain words.** Pins down the shape of the on-disk artifact a
+partner lab produces when they pair a sim rollout with a real
+trajectory. If this test ever fails, partner-contributed
+trajectory-level calibration data can't be ingested safely.
+"""
 
 from __future__ import annotations
 

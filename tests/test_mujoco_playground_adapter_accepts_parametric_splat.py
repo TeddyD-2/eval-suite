@@ -1,6 +1,12 @@
 """Adapter-compatibility test: the existing MujocoPlaygroundAdapter
 accepts a ParametricSplatTask unmodified.
 
+**In plain words.** Proof that adding the v1 splat task family
+didn't require changing the simulator bridge. The architecture
+promise — "drop in new task families with zero changes to the
+substrate" — is what this test guards.
+
+
 This is the proof that the v1 splat path satisfies the eval-suite's
 "absorb new task families through one new Task + one new sidecar with
 zero changes to contracts/sweep/adapter" claim from EXTENSION.md §2.

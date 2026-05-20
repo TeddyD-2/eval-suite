@@ -1,5 +1,14 @@
 """Shared value types used across the eval-suite contracts.
 
+**In plain words.** This file is the vocabulary the whole suite shares.
+It names the building blocks — an observation a robot sees, an action
+it takes, the identity of one test condition (a "cell"), the result of
+one rollout — so that every other file can talk about the same things
+without disagreeing on what they mean. Nothing here *does* anything; it
+just defines the nouns. Keeping these as plain dataclasses with no
+heavy imports means a third-party package can use them without having
+to install TensorFlow, JAX, or a simulator.
+
 These are plain dataclasses (no behavior) so they're safe to import without
 pulling in SimplerEnv / TF / JAX. The Protocols in `contracts.py` reference
 these types.

@@ -1,5 +1,16 @@
 """ProfileGate — the thin-slice deployment admission controller.
 
+**In plain words.** The "should this policy be allowed to drive the
+robot?" check. The deployer writes a short YAML stating their
+minimum bar — worst dimension score, calibration tier, allowed
+policy families, required Pearson r — and the gate reads the
+attached eval-suite manifest's profile and refuses activation when
+it doesn't clear the bar. Refusal reasons are logged so a fleet
+engineer can see exactly which number was too low. This is what
+ties the rest of the suite's honesty machinery to a real
+deployment decision.
+
+
 The credibility wedge between "I have a sim profile" and "I'm willing
 to let this run on real hardware" is a *small, declarative* contract
 the deployer sets and the eval-suite checks before transitioning the

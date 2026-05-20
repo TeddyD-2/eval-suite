@@ -1,5 +1,15 @@
 """Boolean mesh ops for extracting articulable bodies from a static
-splat-derived scene mesh. The highest-implementation-risk piece of the
+splat-derived scene mesh.
+
+**In plain words.** Splats are great at capturing geometry but they
+come out as one giant solid mesh. To let the robot interact with
+parts of the scene (a movable cart, a drawer), the suite needs to
+*carve those bodies out* of the static mesh so they become separate
+articulated objects. This file is the surgeon — the math that
+takes the big mesh and a list of regions, and returns the regions
+as standalone bodies plus the residual scene.
+
+The highest-implementation-risk piece of the
 v1 splat path: splat-derived meshes are non-watertight surfaces, so
 naive `trimesh` boolean ops fail on most inputs.
 

@@ -1,5 +1,13 @@
 """RGB-D capture → MJCF ingest path.
 
+**In plain words.** This is the ingest path for anyone with a depth
+camera (Intel RealSense, iPhone LiDAR, ZED stereo). Point it at a
+folder of paired color + depth + pose frames and it returns a
+sim-ready 3D scene. No Gaussian-splat training required — useful
+for users who don't have the GPU rig to train SuGaR / Nerfstudio
+but do have a depth sensor.
+
+
 Counterpart to `eval_suite.ingest.splat` for the *other* common source
 of real-world scans: a directory of RGB-D frames captured from a sensor
 (RealSense, iPhone LiDAR, ZED). The fusion step is Open3D TSDF; the

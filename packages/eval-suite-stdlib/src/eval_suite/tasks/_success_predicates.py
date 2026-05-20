@@ -1,6 +1,15 @@
 """Declarative, registry-keyed success predicates serializable into the
 manifest's `success_criterion` field (schema 0.3.0+).
 
+**In plain words.** A "predicate" is the rule that decides whether
+an episode counts as a success — "robot reached the region behind
+the truck within half a meter," "robot maintained clearance from
+this body," "robot stayed alive for N steps." This file is the
+small library of pre-built rules a non-programmer adopter can pick
+from when defining their own task; same scene with a different
+predicate produces a different (and provably distinct) run.
+
+
 A predicate is a tuple of (KIND, params) that:
 
   1. Describes the success semantics for an episode (e.g., "reach this

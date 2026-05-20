@@ -1,5 +1,12 @@
 """Generic mesh utilities shared across asset-ingest paths.
 
+**In plain words.** Helpers every ingest path needs: simplify a huge
+mesh down to something the simulator can run at 60 FPS, compute a
+convex hull for collision, hash a file deterministically. Same code
+used regardless of whether the source was a splat, an RGB-D scan,
+or an Objaverse asset.
+
+
 Lifted from the patterns in `assets/namaqualand_scan/convert.py` and
 generalized so non-Namaqualand ingest paths (splat, future RGB-D) can
 reuse them without depending on Namaqualand's CLI script. The Namaqualand

@@ -1,5 +1,11 @@
 """Conformance test for the external plugin demo.
 
+**In plain words.** The pytest a third-party plugin author would
+copy into their own repo to confirm their code satisfies the
+suite's protocols *before* they publish. If this passes, the
+plugin is contract-clean.
+
+
 This is the test a third-party plugin author would write in their own
 repo before publishing. It calls `eval_suite.conformance.full_battery`
 to confirm the Task / Policy / Adapter triple satisfies the v0

@@ -1,5 +1,13 @@
 """LIBERO Task implementation — proof of architecture sim-agnosticism.
 
+**In plain words.** LIBERO is a completely different simulator from
+SimplerEnv. This file wires up three LIBERO scenes as tasks so the
+suite can sweep them with the exact same pipeline it uses for the
+SimplerEnv ones. Its existence is the proof that the suite isn't
+hidden-coupled to any particular simulator — adding a new sim is
+roughly 80 lines of code.
+
+
 The point of this file is to demonstrate that the *same* `GymAdapter`,
 `Manifest`, `statistics`, `analysis`, and notebook pipeline absorbs a
 different simulator backend with only a new Task class. ~80 LOC, no

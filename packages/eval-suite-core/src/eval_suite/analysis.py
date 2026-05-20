@@ -2,6 +2,16 @@
 notebook renders. Pure-Python; no plotting deps (matplotlib stays in
 the notebook).
 
+**In plain words.** After a sweep finishes, this file is what turns
+the pile of raw trial data into the actual "profile" — the per-axis
+breakdown, the worst-axis headline, the side-by-side comparison
+against published real-robot numbers, the canonical four-dimension
+(language / visuals / physics / embodiment) rollup. Everything the
+notebook or the portal *shows* the user comes out of this file. The
+numbers themselves are sealed in the manifest; this file is what
+arranges them so a human can read them.
+
+
 Public surface:
   - load_sweep_dir(path) → SweepBundle
   - profile_for_bundle(bundle) → ProfileReport (per-axis means, worst-axis)

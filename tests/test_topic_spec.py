@@ -1,5 +1,10 @@
 """TopicSpec contract tests.
 
+**In plain words.** Pins down the sim-to-real wiring file: load it
+from YAML, write it back, sign it, verify it. If this breaks, two
+deployers can disagree on which topic the robot was actually
+listening to without anyone noticing.
+
 These don't require rclpy — the dataclass + YAML / JSON round-trips
 + sidecar signing all live in `eval_suite.ros2.topic_spec`.
 """

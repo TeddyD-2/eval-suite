@@ -1,5 +1,13 @@
 """SimplerEnv-backed Task implementations.
 
+**In plain words.** The two reference tasks every robotics paper
+cites: `GoogleRobotPickCokeCan` (29 condition cells covering
+orientation, lighting, background, distractors, table textures, and
+paraphrased instructions) and `WidowXSpoonOnTowel` (one cell, used
+to prove the suite handles a different embodiment without code
+changes). These are how the suite's headline numbers are produced.
+
+
 `GoogleRobotPickCokeCan` exposes the full Variant Aggregation cell grid
 for the Google Robot pick-coke-can task family. Cells are defined
 declaratively (see `_CELL_SPECS` below) and translated to SimplerEnv

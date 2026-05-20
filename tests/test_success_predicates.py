@@ -1,4 +1,10 @@
-"""Tests for `eval_suite.tasks._success_predicates`."""
+"""Tests for `eval_suite.tasks._success_predicates`.
+
+**In plain words.** Pins down that every declarative success
+rule serializes deterministically and reconstructs identically.
+If this breaks, the manifest fingerprint stops being a stable
+function of "what counts as success."
+"""
 
 from __future__ import annotations
 

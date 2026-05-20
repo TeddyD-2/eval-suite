@@ -1,5 +1,12 @@
 """OXE replay contract tests.
 
+**In plain words.** Pins down that the OXE-replay path is
+discoverable from the registry without anyone having
+tensorflow-datasets installed (lazy loading), and that the error
+hint when someone *does* try to use it without the extra is
+helpful. If this ever breaks, the Open-X-Embodiment interop
+promise breaks.
+
 Don't require `tensorflow-datasets` to be installed — exercise:
 
   1. Registration via entry-points.

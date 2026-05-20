@@ -1,5 +1,15 @@
 """ParametricSplatTask — v1 splat-derived trial-generation prototype.
 
+**In plain words.** This is the generic task class for any
+real-world scan that's been ingested into a sim-ready MJCF. A user
+points it at a converted scene directory, picks a goal predicate
+("reach this named region"), names which conditions to vary
+(lighting, camera angle), and the task instantly becomes a benchmark
+cell grid the suite can sweep. It's what turns "I scanned my
+warehouse" into "I have a benchmark for it" without writing any new
+task code.
+
+
 A generic `Task` driving a splat-converted MJCF scene with declarative
 axes (lighting × camera × ...) and a declarative success predicate.
 Each (axis-tuple, predicate) combination is one cell; `n_cells` is the

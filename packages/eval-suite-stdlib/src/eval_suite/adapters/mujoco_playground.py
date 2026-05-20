@@ -1,5 +1,13 @@
 """MuJoCo Playground Adapter — drives a Policy against an MJX-shaped env.
 
+**In plain words.** The sibling of `GymAdapter`, but for legged
+robots. Legs need joint-level commands (not the 7-DoF end-effector
+deltas an arm sim uses), so the suite needs a different driver for
+them. This file is that driver. Same rollout loop; different action
+shape and observation flavor. Its presence is the proof the
+contract isn't accidentally arm-only.
+
+
 The v0 sibling of `GymAdapter`. The split exists because legged
 embodiments emit joint-space actions (12-DoF for Go1, not 7-DoF EEF),
 and because MJX envs use a slightly different observation contract

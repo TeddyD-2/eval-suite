@@ -1,5 +1,15 @@
 """Plugin provenance sidecar.
 
+**In plain words.** A sweep usually involves several pip-installed
+plugin packages: the task is one package, the policy is another, the
+simulator bridge is a third. This file is the paper trail that says
+"this run used version X of package A and version Y of package B."
+If a result later turns out to be wrong, the sidecar lets a reviewer
+nail down exactly which plugin version produced it. Lives next to the
+manifest, evolves separately from it so the manifest's reproducibility
+hash stays stable across plugin-only changes.
+
+
 Sits **alongside** `manifest.json` in the sweep output directory and
 records which pip-installed plugin packages produced each component of
 the run. Deliberately *not* part of the manifest: the manifest schema

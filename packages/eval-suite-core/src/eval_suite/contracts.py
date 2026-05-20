@@ -1,5 +1,14 @@
 """Interface contracts for the eval-suite.
 
+**In plain words.** This file is the rulebook for the whole evaluation
+suite. It spells out the shape any user-supplied piece — a robot model,
+a benchmark task, a simulator bridge, the receipt of a finished run —
+must take so that the rest of the codebase can mix and match them
+without anyone needing to edit the substrate. If you write a new model
+or task that matches these four shapes, every existing report,
+notebook, portal page, and ROS 2 deployment hook works for it
+automatically.
+
 Four Protocols define the substrate:
 
 - `Policy` — anything that maps observations to actions. Octo and RT-1 (via

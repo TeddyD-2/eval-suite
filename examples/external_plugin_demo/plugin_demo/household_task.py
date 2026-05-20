@@ -1,5 +1,11 @@
 """Household task — a reference external Task plugin.
 
+**In plain words.** A pretend "household robot" task with three
+cells (kitchen, pantry, living room). It exists as a worked
+example showing what a third party's task plugin would look like
+in their own pip package.
+
+
 Wraps eval-suite's `_MockEnv` (no real simulation) but with house-themed
 cell labels so the v0 canonical-axis-taxonomy chart and the per-condition
 view show what a real external task family would look like.

@@ -1,5 +1,16 @@
 """Per-(model, task) sweep driver.
 
+**In plain words.** This is the engine of the suite. Hand it a model,
+a task, and how many trials to run, and it methodically rolls the
+model through every test condition the task defines, records what
+happened in each one, and seals the whole thing into a signed receipt
+at the end. It loads the model once and keeps it warm across all the
+trials (because model loading is expensive), writes each trial to disk
+as it finishes (so a crash doesn't lose progress), and produces both
+the per-trial spreadsheet and the reproducibility manifest the rest of
+the suite consumes.
+
+
 Structure:
   load model once → for cell in cells: for seed in seeds: rollout()
                   → emit per-trial CSV row immediately (resumable)

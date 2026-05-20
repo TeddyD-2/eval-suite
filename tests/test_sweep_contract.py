@@ -1,5 +1,10 @@
 """End-to-end sweep contract test — Mock policy + Mock task → CSV + manifest.
 
+**In plain words.** The "smoke test" the CI runs on every commit:
+can the suite actually run a complete sweep, produce a CSV, seal
+a manifest, and have the manifest verify? If this ever red-fails,
+the substrate has a regression and no merges should land.
+
 This is the test that the GitHub Actions workflow runs to verify the
 reproducibility substrate is real on every commit. No GPU, no SimplerEnv,
 no real model.

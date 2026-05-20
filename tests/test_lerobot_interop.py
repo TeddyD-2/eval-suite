@@ -1,5 +1,11 @@
 """LeRobot interop contract tests.
 
+**In plain words.** Pins down that `--policy lerobot` is
+discoverable from the registry without anyone having `lerobot`
+itself installed (the suite stays lightweight) and that the heavy
+dependency only fires when someone actually tries to run a LeRobot
+sweep. If this ever fails, the LeRobot interop promise breaks.
+
 These tests don't require `lerobot` to be installed — they exercise:
 
   1. Registration: the `lerobot` policy is discoverable via the

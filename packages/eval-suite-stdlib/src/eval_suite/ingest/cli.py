@@ -1,5 +1,12 @@
 """Top-level ingest CLI dispatcher.
 
+**In plain words.** The single command that lets a user pick which
+real-world source they want to ingest: a splat, an RGB-D frames
+folder, or a public Objaverse asset. Same `python -m
+eval_suite.ingest` prefix, three sub-commands, identical output
+shape.
+
+
 The ingest path has grown from a single splat → MJCF pipeline to a
 small family of asset-source-specific paths, each of which produces
 the same artifact shape (an MJCF + scene_metadata + asset_provenance

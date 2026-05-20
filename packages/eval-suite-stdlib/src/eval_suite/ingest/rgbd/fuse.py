@@ -1,5 +1,11 @@
 """RGB-D TSDF fusion via Open3D.
 
+**In plain words.** The math that turns dozens of color-plus-depth
+frames into a single 3D mesh. Each frame contributes whatever it
+sees of the scene; the fusion combines them into a coherent
+geometry the simulator can use as the world.
+
+
 Input layout (under `frames_dir`):
 
     color/0000.png      (HxWx3 uint8 RGB)

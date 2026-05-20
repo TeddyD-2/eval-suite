@@ -1,5 +1,14 @@
 """GymAdapter — drives a Policy against any gymnasium-shaped env.
 
+**In plain words.** This is the workhorse that handles every
+arm-style simulator. It takes a robot model + a task + a seed,
+resets the simulator, asks the model for an action, steps the
+simulator forward, repeats until the episode ends, and reports the
+result. Same code drives both SimplerEnv (Google Robot, WidowX) and
+LIBERO — that's the in-tree proof that the suite isn't bound to one
+sim.
+
+
 The same Adapter works for SimplerEnv and LIBERO (both gym-shaped, both
 7-DoF EEF action). Sim-specific quirks live in the `Task` via two
 optional hooks:

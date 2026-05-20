@@ -1,5 +1,15 @@
 """TopicSpec — declarative obs/action ↔ ROS 2 topic mapping.
 
+**In plain words.** A small YAML file that says "the robot's camera
+is on /camera/color/image_raw, send actions to /arm/cmd, stop if
+no image arrives in 0.5 seconds, never command outside this xyz
+box." It's signed and stored next to the manifest so anybody
+auditing a deployment can see exactly which topics the robot was
+listening to and writing to. Without this, the sim-to-real wiring
+is implicit in someone's launch script; with it, the wiring is
+auditable.
+
+
 The deployer wires sim observation fields to real-robot topics and the
 policy's action fields to real-robot command topics. This file makes
 that mapping a first-class signed artifact alongside the eval-suite

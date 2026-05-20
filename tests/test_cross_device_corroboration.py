@@ -1,5 +1,12 @@
 """v0 cross-device corroboration contract.
 
+**In plain words.** Pins down the suite's reproducibility
+promise: two different labs with the same inputs really do
+produce identical fingerprints, and the portal really does store
+both submissions side-by-side as corroboration. If this ever
+breaks, the suite can't honestly claim "byte-identical reproduction
+across labs."
+
 Two submitters running the same pinned inputs produce byte-identical
 manifest run_ids. When both submit to the same portal, the portal
 records both (keyed by `(run_id, submitter_pk)`) and the new

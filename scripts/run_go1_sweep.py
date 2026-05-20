@@ -1,5 +1,12 @@
 """Run the v0 Go1 (Unitree quadruped, MuJoCo Playground) sweep.
 
+**In plain words.** A standalone runner for the legged-robot
+sweep. The arm-side and the legged-side need incompatible Python
+environments (numpy<2 vs numpy>=2), so they live in separate
+scripts. This is the one the user invokes to produce the Go1
+profile.
+
+
 Standalone instead of a subcommand on `eval_suite.cli` so the v0 CLI
 (SimplerEnv / TF / JAX) doesn't have to import jax-mujoco-playground in
 its module-level set. Run via:

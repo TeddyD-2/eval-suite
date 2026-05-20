@@ -1,5 +1,11 @@
 """Industrial-arm mock Policy — a reference external Policy plugin.
 
+**In plain words.** A pretend "industrial arm" model — the
+companion to the household task. Together they show how a
+third-party can ship a complete task + policy pair the suite picks
+up automatically after `pip install`.
+
+
 Wraps eval-suite's `MockPolicy` (zero EEF actions) but with an
 industrial-arm-themed name and a deterministic action perturbation.
 What's "external" about this Policy is the label, the checkpoint id,

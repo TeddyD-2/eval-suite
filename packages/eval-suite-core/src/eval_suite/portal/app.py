@@ -1,5 +1,15 @@
 """Submission portal.
 
+**In plain words.** This is the web server. It exposes two layers: a
+JSON API for programmatic submission (post a signed manifest, get an
+accepted/rejected response) and a plain-HTML browsable UI for humans
+(list of submissions, per-run detail page, two-run side-by-side
+comparison). The whole point is that an evaluator's result becomes a
+URL someone else can click on and read — not a number buried in a
+paper. No JavaScript on the user side; Jinja2 templates and Courier
+New to keep the entire stack auditable.
+
+
 FastAPI app exposing:
 
   Submission API (JSON):

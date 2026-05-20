@@ -1,5 +1,13 @@
 """RandomLocomotionPolicy — joint-space placeholder for v0 framework tests.
 
+**In plain words.** A stand-in legged-robot model that twitches joints
+randomly. Like `MockPolicy` for arms, this exists so the legged
+side of the suite (Unitree Go1, MuJoCo Playground) can be exercised
+end-to-end without a trained controller. The expected behavior is
+that it falls down on rough terrain — that's the proof that the
+suite's "worst-axis" ranking correctly notices terrain fragility.
+
+
 Emits random `JointAction`s within a configurable per-joint bound. Stable
 seeded RNG keyed off the instruction so each episode is reproducible.
 Used for:

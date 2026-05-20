@@ -1,5 +1,14 @@
 """Declarative scene annotation schemas for splat-derived environments.
 
+**In plain words.** Once you have a scanned scene, you need to tell
+the simulator some semantic facts about it: where the robot
+spawns, which named region counts as "the goal," how the mesh
+needs to be rotated to line up with sim gravity, which bodies (a
+movable chair, a refrigerator door) should be carved out so the
+robot can interact with them. This file defines the small JSON
+format that captures all of that.
+
+
 Two on-disk files:
 
   - `scene_metadata.json` — ALWAYS-WORKS layer. Carries the

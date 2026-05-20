@@ -1,5 +1,10 @@
 """Objaverse-XL fetch + license enforcement.
 
+**In plain words.** The downloader. Checks the asset's license
+against the allowed list first; if it's not on the allowlist, the
+fetch is refused with a clear error before any bytes hit the disk.
+
+
 Lazy-imports the `objaverse` client. The license allowlist is checked
 *before* download so a refused asset doesn't even hit the local cache.
 """

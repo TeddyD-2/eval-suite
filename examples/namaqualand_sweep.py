@@ -2,6 +2,12 @@
 """v0 driver — run a sweep on `NamaqualandScanTask` and write the
 `asset_provenance.json` sidecar.
 
+**In plain words.** Runs a Go1 sweep against the photogrammetric
+boulder scan and writes the asset-provenance sidecar. The script
+is the demonstration that real-world scans drop into the suite
+without modifying any contract code.
+
+
 Deliberately a standalone script (not a CLI subcommand) so the v0
 build doesn't modify `eval_suite/sweep.py` or `eval_suite/cli.py`. The
 sweep itself runs through the unchanged `run_sweep()` driver; this

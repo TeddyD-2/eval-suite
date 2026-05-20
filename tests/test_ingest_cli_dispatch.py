@@ -1,5 +1,10 @@
 """Top-level ingest CLI dispatcher tests.
 
+**In plain words.** Confirms `python -m eval_suite.ingest --help`
+works without any heavy converter library installed, and that the
+three sub-commands (splat / rgbd / objaverse) all dispatch
+correctly.
+
 The dispatcher routes `python -m eval_suite.ingest <source> ...` to
 the right subpackage. We exercise:
 

@@ -1,5 +1,14 @@
 """Sim-to-real calibration demo: outcome-level Pearson r + trajectory-level MMRV.
 
+**In plain words.** Run this script to see what the calibration
+layer actually produces: a real Pearson r number with a
+confidence interval, computed by pairing the suite's per-cell sim
+success rates against the published per-condition real-world
+numbers from the SimplerEnv paper. The second half shows MMRV on a
+synthesized trajectory pair as a stand-in for how a partner lab
+would record a real one. Concrete demo of the v2 calibration pillar.
+
+
 Two halves:
 
   1. **Outcome-level Pearson r.** Load a sealed manifest (one of the

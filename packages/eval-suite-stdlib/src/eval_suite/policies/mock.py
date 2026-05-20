@@ -1,5 +1,12 @@
 """MockPolicy — zero actions, used by the CI contract test.
 
+**In plain words.** A stand-in robot model that does nothing — it
+emits zero actions every step. It exists so the suite's CI tests can
+exercise the full sweep pipeline (manifest, signing, analysis)
+without having to load a real model. Catches plumbing bugs without
+needing a GPU.
+
+
 The CI test asserts that a no-op policy round-trips through the Adapter
 and produces a valid Manifest. No SimplerEnv, no GPU, no real model.
 Keeps the contract test fast (<5 seconds on a hosted runner) and

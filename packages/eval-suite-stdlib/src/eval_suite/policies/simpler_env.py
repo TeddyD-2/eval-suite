@@ -1,5 +1,13 @@
 """SimplerEnv-backed Policy — wraps Octo and RT-1 under one `Policy`.
 
+**In plain words.** This is the wrapper that lets the suite evaluate
+the two reference robot foundation models — Octo (Berkeley) and RT-1
+(Google DeepMind) — without those models knowing anything about the
+suite. The user runs `--policy simpler_env --policy-arg family=rt1`
+and this file figures out how to load the checkpoint and present its
+predictions to the suite in the expected shape.
+
+
 Both Octo and RT-1's reference implementations in SimplerEnv expose the
 same `reset(instruction)` / `step(image, instruction)` shape. This
 adapter normalizes that to the `Policy` protocol and tags the wrapped

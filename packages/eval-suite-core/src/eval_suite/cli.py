@@ -1,5 +1,15 @@
 """CLI entry: `python -m eval_suite.cli sweep ...`.
 
+**In plain words.** This is the front door the human uses. The user
+types one command on the terminal naming a task, a model, and how
+many trials to run; this file parses it, finds the right plugins
+(including ones installed from other Python packages), and starts
+the sweep. The `--help` output here is also the suite's catalog —
+running `python -m eval_suite.cli list` is how you discover every
+task, model wrapper, and simulator bridge that's been installed,
+in-tree or third-party, without writing any code.
+
+
 The CLI is plugin-aware. Tasks, Policies, and Adapters are resolved
 by short name from the entry-points registry — including any
 third-party packages installed in the current Python environment.

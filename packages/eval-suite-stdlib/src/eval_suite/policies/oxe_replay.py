@@ -1,5 +1,15 @@
 """OXEReplayPolicy — replays a recorded episode as if it were a policy.
 
+**In plain words.** Pretend a recorded real-world demonstration is a
+"model" — just feed the recorded actions back through the suite as
+if a live model had produced them. Two things this unlocks: it proves
+the suite can ingest data in the Open-X-Embodiment (OXE) and LeRobot
+dataset formats, and it gives you the sim-side rollout you need to
+pair against the real recording for trajectory-level (MMRV)
+calibration. Without this, you couldn't compare "what happened in
+sim" against "what happened in the lab" frame-by-frame.
+
+
 The point isn't to "evaluate" the dataset — its actions are by
 construction the actions that produced the recorded trajectory. The
 point is twofold:

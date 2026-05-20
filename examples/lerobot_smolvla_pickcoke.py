@@ -1,5 +1,10 @@
 """Minimal end-to-end LeRobot interop demo.
 
+**In plain words.** A one-file demo that proves you can evaluate a
+HuggingFace LeRobot checkpoint through the suite without writing any
+custom code. Reads as a recipe a new user can copy.
+
+
 Runs a small sweep with the `LeRobotPolicy` plugin against `MockTask`
 (no GPU sim required) so you can see the wiring without provisioning
 SAPIEN. For a real evaluation, swap `--task mock` for any of the

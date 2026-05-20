@@ -1,5 +1,10 @@
 """Contract tests — MockPolicy + MockTask + GymAdapter round-trip.
 
+**In plain words.** The fastest possible end-to-end smoke test:
+run a sweep using stand-ins, confirm the receipt comes out right.
+If this ever fails, the substrate itself is broken before any
+real model gets near it.
+
 These tests run without any GPU, simulator, or TF/JAX. They verify that:
 - MockPolicy and MockTask satisfy the Protocol contracts (runtime check).
 - The Adapter drives a rollout end-to-end against MockTask.
