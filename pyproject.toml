@@ -63,6 +63,21 @@ module = [
     "std_msgs.*",
     "cv2",
     "yaml",
+    # v2 Phase 1 — LeRobot / OXE interop. Heavy deps behind the
+    # `[lerobot]` / `[oxe]` extras; lazy-imported inside Policy
+    # constructors so the substrate stays importable without them.
+    "torch",
+    "torch.*",
+    "lerobot",
+    "lerobot.*",
+    "tensorflow_datasets",
+    "tensorflow_datasets.*",
+    "datasets",
+    "datasets.*",
+    "objaverse",
+    "objaverse.*",
+    "open3d",
+    "open3d.*",
 ]
 ignore_missing_imports = true
 

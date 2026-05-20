@@ -106,7 +106,7 @@ def _load_episode_actions(
 ) -> np.ndarray[Any, Any]:
     if fmt == "oxe":
         try:
-            import tensorflow_datasets as tfds  # type: ignore[import-not-found]
+            import tensorflow_datasets as tfds
         except ImportError as e:
             raise RuntimeError(
                 "OXEReplayPolicy(format='oxe') needs the `[oxe]` extra: "
@@ -123,7 +123,7 @@ def _load_episode_actions(
         raise IndexError(f"OXE dataset {dataset_id!r} has no episode {episode_id}")
     if fmt == "lerobot":
         try:
-            from datasets import load_dataset  # type: ignore[import-not-found]
+            from datasets import load_dataset
         except ImportError as e:
             raise RuntimeError(
                 "OXEReplayPolicy(format='lerobot') needs `datasets` from the "

@@ -71,7 +71,7 @@ class LeRobotPolicy:
         # installed. ImportError surfaces a one-line install hint.
         try:
             import torch
-            from lerobot.policies import (  # type: ignore[import-not-found]
+            from lerobot.policies import (
                 from_pretrained as _from_pretrained,
             )
         except ImportError as e:

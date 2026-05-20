@@ -59,7 +59,7 @@ def fuse_rgbd_to_mesh(
     and emit a `StaticMeshResult` matching the splat pipeline's shape.
     """
     try:
-        import open3d as o3d  # type: ignore[import-not-found]
+        import open3d as o3d
     except ImportError as e:
         raise Open3DUnavailableError(
             "Open3D not installed. `pip install 'eval-suite-stdlib[rgbd]'`."

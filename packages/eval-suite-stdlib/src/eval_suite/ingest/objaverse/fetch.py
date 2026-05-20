@@ -49,7 +49,7 @@ def fetch_asset(
     the `objaverse` client isn't installed.
     """
     try:
-        import objaverse  # type: ignore[import-not-found]
+        import objaverse
     except ImportError as e:
         raise ObjaverseUnavailableError(
             "`objaverse` not installed. `pip install 'eval-suite-stdlib[objaverse]'`."
