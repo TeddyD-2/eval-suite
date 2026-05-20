@@ -36,19 +36,22 @@ jobs:
           cache: pip
 
       - name: Install packages
-        # The repo ships two distributions: eval-suite-core (substrate) and
-        # eval-suite-stdlib (in-tree reference plugins). Third-party plugins
-        # depend on -core only. Both share the `eval_suite.*` import
-        # namespace via PEP 420.
+        # The repo ships three distributions: eval-suite-core (substrate),
+        # eval-suite-stdlib (in-tree reference plugins), and eval-suite-ros2
+        # (deployment bridge — static layer is contract-tested here; rclpy
+        # paths are gated on ros2-ci.yml). All three share the
+        # `eval_suite.*` import namespace via PEP 420.
         run: |
           python -m pip install --upgrade pip
-          pip install -e "packages/eval-suite-core[dev]" -e packages/eval-suite-stdlib
+          pip install -e "packages/eval-suite-core[dev]" \
+            -e packages/eval-suite-stdlib \
+            -e packages/eval-suite-ros2
 
       - name: Lint (ruff)
-        run: ruff check packages/eval-suite-core/src/eval_suite packages/eval-suite-stdlib/src/eval_suite tests
+        run: ruff check packages/eval-suite-core/src/eval_suite packages/eval-suite-stdlib/src/eval_suite packages/eval-suite-ros2/src/eval_suite tests
 
       - name: Type check (mypy --strict)
-        run: mypy packages/eval-suite-core/src/eval_suite packages/eval-suite-stdlib/src/eval_suite
+        run: mypy packages/eval-suite-core/src/eval_suite packages/eval-suite-stdlib/src/eval_suite packages/eval-suite-ros2/src/eval_suite
 
       - name: Contract tests (pytest)
         # `-x` so we stop at the first failure (failing contract = broken

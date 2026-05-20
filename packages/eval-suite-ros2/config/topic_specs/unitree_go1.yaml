@@ -1,0 +1,39 @@
+# Unitree Go1 — 12-DoF joint targets
+#
+# Mirrors what `MujocoPlaygroundAdapter` produces in sim: a JointAction
+# carrying 12 joint targets (FR/FL/RR/RL × hip/thigh/calf). Published
+# to the Go1 SDK low-level topic graph as a JointState message.
+embodiment: unitree_go1
+description: |
+  Unitree Go1 quadruped joint-target controller. 12 actuators in
+  the URDF order; `action_scaling` per-joint slot lets you cap individual
+  joint commands for safety.
+
+image_topic: /go1/camera/front/image_raw
+image_msg_type: sensor_msgs/Image
+
+instruction_topic: /task/instruction
+instruction_msg_type: std_msgs/String
+
+state_topic: /go1/joint_states
+state_msg_type: sensor_msgs/JointState
+
+action_topic: /go1/joint_commands
+action_msg_type: sensor_msgs/JointState
+action_scaling:
+  j0: 1.0
+  j1: 1.0
+  j2: 1.0
+  j3: 1.0
+  j4: 1.0
+  j5: 1.0
+  j6: 1.0
+  j7: 1.0
+  j8: 1.0
+  j9: 1.0
+  j10: 1.0
+  j11: 1.0
+
+rate_hz: 50.0
+watchdog_timeout_s: 0.1
+workspace_bounds: null

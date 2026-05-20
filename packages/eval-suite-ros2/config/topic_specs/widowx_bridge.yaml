@@ -1,0 +1,38 @@
+# WidowX (Bridge dataset hardware) — 7-DoF EEF action
+#
+# Reference topic graph for the WidowX setup used by the Bridge dataset
+# and by SimplerEnv's widowx_spoon_on_towel task. The action is the same
+# 7-DoF EEF convention SimplerEnv's `Action` produces; the sim→real
+# scaling slot here is identity (the Bridge teleop publishes commands
+# already in robot-frame meters).
+embodiment: widowx_bridge
+description: |
+  WidowX 6 arm with Bridge teleop topic graph. 7-DoF EEF action published
+  as a Float32MultiArray [dx, dy, dz, drx, dry, drz, gripper].
+
+image_topic: /widowx/camera/image_raw
+image_msg_type: sensor_msgs/Image
+
+instruction_topic: /task/instruction
+instruction_msg_type: std_msgs/String
+
+state_topic: /widowx/joint_states
+state_msg_type: sensor_msgs/JointState
+
+action_topic: /widowx/cartesian_command
+action_msg_type: std_msgs/Float32MultiArray
+action_scaling:
+  world_vector_x: 1.0
+  world_vector_y: 1.0
+  world_vector_z: 1.0
+  rot_axangle_x: 1.0
+  rot_axangle_y: 1.0
+  rot_axangle_z: 1.0
+  gripper: 1.0
+
+rate_hz: 5.0
+watchdog_timeout_s: 0.5
+workspace_bounds:
+  x: [0.1, 0.6]
+  y: [-0.3, 0.3]
+  z: [0.0, 0.4]

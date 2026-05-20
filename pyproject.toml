@@ -25,10 +25,11 @@ warn_redundant_casts = true
 show_error_codes = true
 namespace_packages = true
 explicit_package_bases = true
-mypy_path = "packages/eval-suite-core/src:packages/eval-suite-stdlib/src"
+mypy_path = "packages/eval-suite-core/src:packages/eval-suite-stdlib/src:packages/eval-suite-ros2/src"
 files = [
     "packages/eval-suite-core/src/eval_suite",
     "packages/eval-suite-stdlib/src/eval_suite",
+    "packages/eval-suite-ros2/src/eval_suite",
 ]
 
 [[tool.mypy.overrides]]
@@ -51,6 +52,17 @@ module = [
     "manifold3d.*",
     "fast_simplification",
     "fast_simplification.*",
+    # v2 Phase 4 — ROS 2 bridge. rclpy + msg packages are apt-installed
+    # via ros-${ROS_DISTRO}-rclpy etc., not pip — mypy can't find stubs
+    # on a non-ROS dev box. The node module's runtime imports are
+    # already wrapped in try/except for the ImportError path.
+    "rclpy",
+    "rclpy.*",
+    "geometry_msgs.*",
+    "sensor_msgs.*",
+    "std_msgs.*",
+    "cv2",
+    "yaml",
 ]
 ignore_missing_imports = true
 

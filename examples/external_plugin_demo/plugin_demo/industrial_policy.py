@@ -12,7 +12,6 @@ inference here; the contract surface (Policy Protocol) is identical.
 from __future__ import annotations
 
 import numpy as np
-
 from eval_suite._types import Action, Observation
 
 

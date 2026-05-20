@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "eval-suite-ros2"
+version = "0.1.0"
+description = "eval-suite ROS 2 deployment bridge: lifecycle node + action server that wrap any eval_suite.Policy, with a declarative obs/action → topic mapping (TopicSpec) signed into a sidecar. Includes a ProfileGate that refuses node activation when the attached eval-suite profile fails a deployer-set bar."
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Teddy Duncker", email = "teddyduncker@gmail.com" }]
+readme = "README.md"
+
+# Only the static parts (TopicSpec, ProfileGate, sidecar I/O) are
+# importable without rclpy. The lifecycle node and action server have a
+# runtime dependency on rclpy + sensor_msgs + geometry_msgs which is
+# usually installed via ROS 2's apt repo rather than pip — kept as a
+# documented dependency, not a pip pin, so this package installs
+# everywhere.
+dependencies = [
+    "eval-suite-core>=0.1",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+ros2 = [
+    # rclpy is normally apt-installed via ros-<distro>-rclpy. Listed here
+    # as a hint for environments that do pip-install it. Tested against
+    # Humble and Jazzy.
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["eval_suite*"]
+namespaces = true
+
+[tool.setuptools.package-data]
+"eval_suite.ros2" = ["topic_specs/*.yaml"]

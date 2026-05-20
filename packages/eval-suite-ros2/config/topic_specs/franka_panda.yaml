@@ -1,0 +1,37 @@
+# Franka Panda — 7-DoF EEF Cartesian velocity (geometry_msgs/Twist)
+#
+# The default ROS 2 manipulation reference embodiment. A LeRobot or
+# SimplerEnv 7-DoF EEF Action maps cleanly: linear xyz → world_vector,
+# angular xyz → rot_axangle. The gripper field is dropped because the
+# Panda gripper has its own action server (`/franka_gripper/grasp`);
+# add a sibling YAML if you want to wire it.
+embodiment: franka_panda
+description: |
+  Franka Emika Panda arm. 7-DoF EEF Cartesian velocity control via Twist.
+  Gripper is out-of-band (separate action server) so it's not mapped here.
+
+image_topic: /camera/color/image_raw
+image_msg_type: sensor_msgs/Image
+
+instruction_topic: /task/instruction
+instruction_msg_type: std_msgs/String
+
+state_topic: /franka_state_controller/joint_states
+state_msg_type: sensor_msgs/JointState
+
+action_topic: /cartesian_velocity_controller/command
+action_msg_type: geometry_msgs/Twist
+action_scaling:
+  world_vector_x: 0.5
+  world_vector_y: 0.5
+  world_vector_z: 0.5
+  rot_axangle_x: 0.5
+  rot_axangle_y: 0.5
+  rot_axangle_z: 0.5
+
+rate_hz: 30.0
+watchdog_timeout_s: 0.2
+workspace_bounds:
+  x: [0.2, 0.7]
+  y: [-0.4, 0.4]
+  z: [0.05, 0.7]

@@ -19,7 +19,6 @@ from eval_suite.conformance import (
     verify_policy,
     verify_task,
 )
-
 from plugin_demo import HouseholdMockTask, IndustrialArmMockPolicy
 
 
