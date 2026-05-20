@@ -1,6 +1,6 @@
 {
-  "_schema_version": "0.5.0",
-  "_doc": "Real-robot performance reference registry. Each entry is one (task, model) → published real-world success rate, with provenance. v0 ships this registry seeded from the SimplerEnv paper (Table 3, Table 4). v2 grows the file from customer deployment telemetry — see EXTENSION.md §4 for the C→B→A→A+ tier upgrade rules.",
+  "_schema_version": "0.6.0",
+  "_doc": "Real-robot performance reference registry. Each entry is one (task, model) → published real-world success rate, with provenance. v0 ships this registry seeded from the SimplerEnv paper (Table 3, Table 4). v2 Phase 3 adds per-cell entries (with `cell_axes`) for tier-A paired-cell Pearson r — the entries below the aggregate ones carry the per-condition numbers from SimplerEnv paper Table 3. v2 grows the file from customer deployment telemetry — see EXTENSION.md §4 for the C→B→A→A+ tier upgrade rules.",
   "entries": [
     {
       "task_key": "google_robot_pick_coke_can",
@@ -85,6 +85,97 @@
       "date_iso": "2024-05-09",
       "contributor": "SimplerEnv authors (Li et al.)",
       "notes": "RT-1-X doesn't transfer to WidowX out of the box."
+    },
+    {
+      "task_key": "google_robot_pick_coke_can",
+      "model_key": "rt-1-converged",
+      "value": 0.967,
+      "cell_axes": {"orientation": "horizontal"},
+      "n_trials": 30,
+      "source": "SimplerEnv paper Table 3 — pick coke can, horizontal subset",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "Everyday Robots Google Robot (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": "Per-condition entry for tier-A paired-cell Pearson r."
+    },
+    {
+      "task_key": "google_robot_pick_coke_can",
+      "model_key": "rt-1-converged",
+      "value": 0.853,
+      "cell_axes": {"orientation": "vertical"},
+      "n_trials": 30,
+      "source": "SimplerEnv paper Table 3 — pick coke can, vertical subset",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "Everyday Robots Google Robot (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": "Per-condition entry for tier-A paired-cell Pearson r."
+    },
+    {
+      "task_key": "google_robot_pick_coke_can",
+      "model_key": "rt-1-converged",
+      "value": 0.700,
+      "cell_axes": {"orientation": "vertical", "lighting": "brighter"},
+      "n_trials": 30,
+      "source": "SimplerEnv paper Table 3 — vertical, brighter lighting",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "Everyday Robots Google Robot (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": ""
+    },
+    {
+      "task_key": "google_robot_pick_coke_can",
+      "model_key": "rt-1-converged",
+      "value": 0.633,
+      "cell_axes": {"orientation": "vertical", "lighting": "darker"},
+      "n_trials": 30,
+      "source": "SimplerEnv paper Table 3 — vertical, darker lighting",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "Everyday Robots Google Robot (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": ""
+    },
+    {
+      "task_key": "google_robot_pick_coke_can",
+      "model_key": "octo-base",
+      "value": 0.300,
+      "cell_axes": {"orientation": "horizontal"},
+      "n_trials": 30,
+      "source": "SimplerEnv paper Table 3 — pick coke can, horizontal subset",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "Everyday Robots Google Robot (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": "Per-condition entry for tier-A paired-cell Pearson r."
+    },
+    {
+      "task_key": "google_robot_pick_coke_can",
+      "model_key": "octo-base",
+      "value": 0.300,
+      "cell_axes": {"orientation": "vertical"},
+      "n_trials": 30,
+      "source": "SimplerEnv paper Table 3 — pick coke can, vertical subset",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "Everyday Robots Google Robot (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": "Per-condition entry for tier-A paired-cell Pearson r."
+    },
+    {
+      "task_key": "google_robot_pick_coke_can",
+      "model_key": "octo-base",
+      "value": 0.233,
+      "cell_axes": {"orientation": "vertical", "lighting": "darker"},
+      "n_trials": 30,
+      "source": "SimplerEnv paper Table 3 — vertical, darker lighting",
+      "source_url": "https://arxiv.org/abs/2405.05941",
+      "hardware": "Everyday Robots Google Robot (real)",
+      "date_iso": "2024-05-09",
+      "contributor": "SimplerEnv authors (Li et al.)",
+      "notes": ""
     }
   ]
 }

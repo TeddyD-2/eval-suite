@@ -43,6 +43,13 @@ def _load_real_perf() -> dict[str, dict[str, float]]:
 
     Tolerates a missing registry (returns {}) so contract tests that don't
     care about calibration overlays don't have to seed a registry file.
+
+    **Aggregate-only flatten:** entries with a `cell_axes` field are
+    per-cell rows for tier-A paired-cell Pearson r (v2 Phase 3) — they
+    are NOT what callers of `_load_real_perf()` want, since the
+    aggregate-overlay path keys by (task, model) alone. Skip them here;
+    they're consumed via `_load_real_perf_full()` + `paired_cell_data()`
+    in the calibration stats path.
     """
     path = _registry_path()
     if not path.exists():
@@ -50,6 +57,8 @@ def _load_real_perf() -> dict[str, dict[str, float]]:
     raw = json.loads(path.read_text())
     out: dict[str, dict[str, float]] = {}
     for entry in raw.get("entries", []):
+        if entry.get("cell_axes"):
+            continue
         task_key = entry["task_key"]
         model_key = entry["model_key"]
         out.setdefault(task_key, {})[model_key] = float(entry["value"])
