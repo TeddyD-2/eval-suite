@@ -28,6 +28,21 @@ splat = [
     "scipy>=1.11",
     "manifold3d>=2.5",
 ]
+# v2 Phase 1 — LeRobot interop. `lerobot` pulls torch + huggingface_hub
+# transitively; `datasets` is here too so LeRobot's HF-format datasets
+# work as a replay source for the calibration pillar.
+lerobot = [
+    "lerobot>=0.4",
+    "torch>=2.2",
+    "huggingface_hub>=0.24",
+    "datasets>=2.18",
+]
+# v2 Phase 1 — Open-X-Embodiment / RLDS replay path. Separate extra
+# because TF is a heavy install most users don't need.
+oxe = [
+    "tensorflow-datasets>=4.9",
+    "tensorflow>=2.15",
+]
 
 [project.entry-points."eval_suite.tasks"]
 google_robot_pick_coke_can = "eval_suite.tasks.simpler_env:GoogleRobotPickCokeCan"
@@ -41,6 +56,8 @@ mock                       = "eval_suite.tasks.mock:MockTask"
 [project.entry-points."eval_suite.policies"]
 simpler_env       = "eval_suite.policies.simpler_env:SimplerEnvPolicy"
 random_locomotion = "eval_suite.policies.random_locomotion:RandomLocomotionPolicy"
+lerobot           = "eval_suite.policies.lerobot:LeRobotPolicy"
+oxe_replay        = "eval_suite.policies.oxe_replay:OXEReplayPolicy"
 mock              = "eval_suite.policies.mock:MockPolicy"
 
 [project.entry-points."eval_suite.adapters"]

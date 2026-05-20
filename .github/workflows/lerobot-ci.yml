@@ -1,0 +1,59 @@
+name: lerobot-ci
+
+# Gated workflow for the [lerobot] + [oxe] extras. The default CI runner
+# (ci.yml) doesn't install these — torch + lerobot + tensorflow is a
+# heavy install and unnecessary for the substrate contract. This
+# workflow runs the interop policy tests against a CPU-only install of
+# the extras on a separate runner so a regression in either path is
+# caught without slowing down the substrate CI loop.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/eval-suite-stdlib/src/eval_suite/policies/lerobot.py'
+      - 'packages/eval-suite-stdlib/src/eval_suite/policies/oxe_replay.py'
+      - 'tests/test_lerobot_interop.py'
+      - 'tests/test_oxe_replay.py'
+      - 'packages/eval-suite-stdlib/pyproject.toml'
+      - '.github/workflows/lerobot-ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'packages/eval-suite-stdlib/src/eval_suite/policies/lerobot.py'
+      - 'packages/eval-suite-stdlib/src/eval_suite/policies/oxe_replay.py'
+      - 'tests/test_lerobot_interop.py'
+      - 'tests/test_oxe_replay.py'
+      - 'packages/eval-suite-stdlib/pyproject.toml'
+
+concurrency:
+  group: lerobot-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  interop:
+    name: LeRobot + OXE replay interop tests
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install eval-suite + [lerobot] + [oxe] (CPU-only torch + TF)
+        # CPU torch keeps the install ~2 GB; the smoke tests don't need GPU.
+        # tensorflow-cpu likewise. We pin `--extra-index-url` for the CPU
+        # torch wheel and let pip resolve everything else.
+        run: |
+          python -m pip install --upgrade pip
+          pip install --extra-index-url https://download.pytorch.org/whl/cpu \
+            -e "packages/eval-suite-core[dev]" \
+            -e "packages/eval-suite-stdlib[lerobot,oxe]"
+
+      - name: Interop contract tests
+        run: pytest tests/test_lerobot_interop.py tests/test_oxe_replay.py -ra --durations=10
