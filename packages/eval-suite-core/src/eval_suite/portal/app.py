@@ -37,6 +37,7 @@ Run locally:
 
 from __future__ import annotations
 
+import importlib.metadata
 import json
 import math
 import os
@@ -62,6 +63,18 @@ _jinja = Environment(
     loader=FileSystemLoader(_TEMPLATES_DIR),
     autoescape=select_autoescape(["html"]),
 )
+
+
+def _eval_suite_version() -> str:
+    """Best-effort resolution of the installed eval-suite-core version.
+
+    Returns "unknown" when the package isn't installed (e.g. running
+    the portal straight out of a source tree without `pip install -e`).
+    """
+    try:
+        return importlib.metadata.version("eval-suite-core")
+    except importlib.metadata.PackageNotFoundError:
+        return "unknown"
 
 
 # ---- helpers shared across handlers ------------------------------------
@@ -349,7 +362,7 @@ def create_app(store: SubmissionStore | None = None) -> FastAPI:
             checkpoint_truncated=(manifest.model.checkpoint_sha256[:24] + "…")
                 if manifest.model.checkpoint_sha256 else "—",
             contract_version_str=CONTRACT_VERSION,
-            eval_suite_version_str="0.1.0",  # static; sidecar value would be more authoritative
+            eval_suite_version_str=_eval_suite_version(),
             verify_ok=manifest.verify(),
             canonical_profile=profile,
             dims=["language", "visuals", "physics", "embodiment"],

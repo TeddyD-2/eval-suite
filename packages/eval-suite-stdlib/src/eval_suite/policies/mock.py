@@ -46,3 +46,7 @@ class MockPolicy:
     def checkpoint_id(self) -> str:
         # No weights; use a constant sentinel so manifests are still hashable.
         return "mock:zero-action-policy:v1"
+
+    @property
+    def family(self) -> str:
+        return "mock"

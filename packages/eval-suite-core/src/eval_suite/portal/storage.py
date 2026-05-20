@@ -27,6 +27,7 @@ database. Keeps the portal trivially `git clone`-deployable.
 from __future__ import annotations
 
 import json
+import secrets
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -86,7 +87,10 @@ class Submission:
 
 def _pk_short(pk_hex: str | None) -> str:
     if not pk_hex:
-        return f"anonymous-{int(time.time() * 1000)}"
+        # Collision-safe random suffix instead of a wall-clock timestamp
+        # (two anonymous submissions arriving in the same millisecond used
+        # to share a slug and silently overwrite each other).
+        return f"anonymous-{secrets.token_hex(4)}"
     return pk_hex[:16]
 
 
@@ -186,10 +190,10 @@ class SubmissionStore:
             if not candidates:
                 return None
         sub = candidates[0]
-        sub_dir = self._root / sub.run_id / _pk_short(sub.submitter_pk if sub.submitter_pk and not sub.submitter_pk.startswith("anonymous-") else None)
-        # The _pk_short() result on accept() is what's on disk; recompute
-        # the same way for retrieval. For anonymous-<ts> the value IS the
-        # pk_short, so we use it directly.
+        # Anonymous submissions store the slug verbatim in `submitter_pk`
+        # (it's a random-suffixed string, not a real public key). Signed
+        # submissions store the full pk; the on-disk dir uses the
+        # first-16 hex shortening.
         if sub.submitter_pk.startswith("anonymous-"):
             sub_dir = self._root / sub.run_id / sub.submitter_pk
         else:

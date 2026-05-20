@@ -24,12 +24,11 @@ sweep — `registry.get_*(name)` is called inside `_run_sweep`, not at
 module top. This is so `python -m eval_suite.cli --help` doesn't pull
 in TensorFlow or JAX.
 
-**Plugin kwargs.** Some Policies need constructor arguments (e.g.
-SimplerEnvPolicy needs `family`, `ckpt_path`, `model_type`). The CLI
-supports `--policy-arg key=value` (repeatable) for arbitrary
-constructor kwargs. SimplerEnv-shortcut flags (`--model-family`,
-`--rt1-ckpt-path`, `--octo-model-type`) stay so the bundled
-`scripts/run_full_sweep.sh` invocations work without --policy-arg.
+**Plugin kwargs.** Policies that need constructor arguments (e.g.
+SimplerEnvPolicy needs `family`, `policy_setup`, `ckpt_path` /
+`model_type`) accept them via `--policy-arg key=value` (repeatable).
+There is only one entry path — every Policy, in-tree and third-party,
+goes through it. `scripts/run_full_sweep.sh` is the worked example.
 """
 
 from __future__ import annotations
@@ -49,26 +48,6 @@ def _kv_args(values: list[str] | None) -> dict[str, Any]:
         k, sep, val = v.partition("=")
         out[k.strip()] = val
     return out
-
-
-def _legacy_simpler_env_kwargs(args: argparse.Namespace) -> dict[str, Any]:
-    """Translate the SimplerEnv-shortcut CLI flags into SimplerEnvPolicy kwargs.
-
-    `scripts/run_full_sweep.sh` uses these shortcuts instead of the
-    generic `--policy simpler_env --policy-arg ...` form.
-    """
-    setup = (
-        "google_robot" if args.task.startswith("google_robot")
-        else "widowx_bridge" if args.task.startswith("widowx")
-        else None
-    )
-    if args.model_family == "rt1":
-        if not args.rt1_ckpt_path:
-            raise SystemExit("--rt1-ckpt-path is required when --model-family rt1")
-        return {"family": "rt1", "policy_setup": setup, "ckpt_path": args.rt1_ckpt_path}
-    if args.model_family == "octo":
-        return {"family": "octo", "policy_setup": setup, "model_type": args.octo_model_type}
-    raise SystemExit(f"unknown --model-family: {args.model_family}")
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -100,9 +79,8 @@ def _build_parser() -> argparse.ArgumentParser:
     sweep_p.add_argument("--task-arg", action="append", default=[],
                          help="Constructor kwarg for the Task, repeatable. Format: key=value.")
 
-    sweep_p.add_argument("--policy",
-                         help=f"Policy plugin name. Installed: {sorted(policies)}. "
-                              "Optional if --model-family is used (SimplerEnv shortcut).")
+    sweep_p.add_argument("--policy", required=True,
+                         help=f"Policy plugin name. Installed: {sorted(policies)}.")
     sweep_p.add_argument("--policy-arg", action="append", default=[],
                          help="Constructor kwarg for the Policy, repeatable.")
 
@@ -111,15 +89,6 @@ def _build_parser() -> argparse.ArgumentParser:
                               "Default: gym.")
     sweep_p.add_argument("--adapter-arg", action="append", default=[],
                          help="Constructor kwarg for the Adapter, repeatable.")
-
-    # SimplerEnv-shortcut invocation path: these translate internally to
-    # --policy simpler_env + --policy-arg family=... .
-    sweep_p.add_argument("--model-family", choices=["rt1", "octo"], default=None,
-                         help="SimplerEnv shortcut: select SimplerEnvPolicy with the given family.")
-    sweep_p.add_argument("--rt1-ckpt-path", default=None,
-                         help="Path to RT-1 saved_model dir (required if --model-family rt1).")
-    sweep_p.add_argument("--octo-model-type", default="octo-base",
-                         choices=["octo-base", "octo-small"])
 
     sweep_p.add_argument("--trials", type=int, required=True, help="N seeds per cell.")
     sweep_p.add_argument("--seed-base", type=int, default=0,
@@ -185,16 +154,9 @@ def _run_sweep(args: argparse.Namespace) -> int:
     task_cls = get_task(args.task)
     task = task_cls(**_kv_args(args.task_arg))
 
-    # 2. Policy — either the generic --policy name or the
-    # SimplerEnv-shortcut --model-family flag.
-    if args.policy:
-        policy_cls = get_policy(args.policy)
-        policy_kwargs = _kv_args(args.policy_arg)
-    elif args.model_family is not None:
-        policy_cls = get_policy("simpler_env")
-        policy_kwargs = _legacy_simpler_env_kwargs(args)
-    else:
-        raise SystemExit("--policy is required (or use the --model-family SimplerEnv shortcut)")
+    # 2. Policy — resolve via the entry-points registry and apply --policy-arg kwargs.
+    policy_cls = get_policy(args.policy)
+    policy_kwargs = _kv_args(args.policy_arg)
     policy = policy_cls(**policy_kwargs)
 
     # 3. Adapter

@@ -60,3 +60,7 @@ class RandomLocomotionPolicy:
     @property
     def checkpoint_id(self) -> str:
         return f"mock:random-locomotion-policy:dim={self._action_dim}:bound={self._bound}:seed={self._base_seed}"
+
+    @property
+    def family(self) -> str:
+        return "random-locomotion"

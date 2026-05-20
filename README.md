@@ -40,8 +40,10 @@ docker run --gpus all --rm \
   -v $PWD/results:/work/results \
   evalsuite \
   python -m eval_suite.cli sweep \
-    --model-family rt1 \
-    --rt1-ckpt-path /work/checkpoints/rt_1_tf_trained_for_000400120 \
+    --policy simpler_env \
+    --policy-arg family=rt1 \
+    --policy-arg policy_setup=google_robot \
+    --policy-arg ckpt_path=/work/checkpoints/rt_1_tf_trained_for_000400120 \
     --task google_robot_pick_coke_can \
     --trials 20 \
     --output-dir /work/results/run \

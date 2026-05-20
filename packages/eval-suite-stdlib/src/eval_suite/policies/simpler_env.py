@@ -98,3 +98,10 @@ class SimplerEnvPolicy:
     @property
     def checkpoint_id(self) -> str:
         return self._checkpoint_id
+
+    @property
+    def family(self) -> str:
+        # Surfaced into Manifest.model.family by sweep.py — used by
+        # analysis to group submissions and pick the right calibration
+        # reference. "rt1" / "octo".
+        return self._family

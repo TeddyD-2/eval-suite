@@ -21,6 +21,7 @@ from __future__ import annotations
 import csv
 import json
 import logging
+import os
 import platform
 import subprocess
 import time
@@ -97,9 +98,18 @@ def _detect_hardware() -> HardwareRef:
 
 
 def _resolve_simulator_ref() -> SimulatorRef:
+    # Resolved from $SIMPLER_ENV_ROOT so the manifest faithfully records
+    # which SimplerEnv checkout produced this run. Unset → "unknown",
+    # which is the honest default for sweeps that don't ride on SimplerEnv
+    # (mock, MJX, splat-only). The Dockerfile sets this env var.
     aux: dict[str, str] = {}
-    simpler_root = Path("/home/teddy/simpler-env")
-    sim_commit = _git_sha(simpler_root) if simpler_root.exists() else "unknown"
+    simpler_env_root = os.environ.get("SIMPLER_ENV_ROOT", "").strip()
+    if not simpler_env_root:
+        return SimulatorRef(name="simpler-env", commit="unknown", auxiliary_commits=aux)
+    simpler_root = Path(simpler_env_root).expanduser()
+    if not simpler_root.exists():
+        return SimulatorRef(name="simpler-env", commit="unknown", auxiliary_commits=aux)
+    sim_commit = _git_sha(simpler_root)
     ms2_sub = simpler_root / "ManiSkill2_real2sim"
     if ms2_sub.exists():
         aux["maniskill2_real2sim"] = _git_sha(ms2_sub)
@@ -149,12 +159,18 @@ def _cell_payload(cr: CellResult) -> CellResultPayload:
     )
 
 
-def _model_family(name: str) -> str:
-    n = name.lower()
-    if "octo" in n:
-        return "octo"
-    if "rt1" in n or "rt-1" in n:
-        return "rt1"
+def _model_family(policy: Policy) -> str:
+    """Read the policy's self-declared family tag.
+
+    Policies expose `family: str` (optional attribute, see `contracts.Policy`).
+    Bundled stdlib policies all set it; third-party policies that don't
+    are bucketed as "unknown" — which is the honest default. We no
+    longer keyword-match on policy name (that locked the family
+    taxonomy to RT-1 / Octo).
+    """
+    fam = getattr(policy, "family", None)
+    if isinstance(fam, str) and fam:
+        return fam
     return "unknown"
 
 
@@ -270,7 +286,7 @@ def run_sweep(
         name=policy.name,
         checkpoint_sha256=ckpt_sha,
         huggingface_revision=hf_rev,
-        family=_model_family(policy.name),
+        family=_model_family(policy),
     )
 
     # Capture the Task's canonical_axis_map so the manifest binds

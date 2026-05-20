@@ -274,19 +274,34 @@ class CanonicalProfile:
 
 
 def _task_canonical_axis_map(sweep: CombinedSweep) -> dict[str, CanonicalDim]:
-    """Recover the Task's `canonical_axis_map` for an already-loaded sweep.
+    """Recover the Task's `canonical_axis_map` from the sealed manifest.
 
-    The map lives on the Task class, not on the manifest. We hard-code
-    the lookup by embodiment_task here so analysis doesn't have to
-    re-import the Task modules (which would pull SimplerEnv / JAX
-    just to render a chart). A future schema rev will include the map in the manifest itself
-    once the schema-0.2.0 bump lands.
+    Schema 0.2.0+ binds the Task's `canonical_axis_map` into the hashed
+    payload, so the published profile is provably linked to the mapping
+    that produced it. We read directly from the manifest — no in-tree
+    dict to maintain, third-party Tasks render correctly without a code
+    change.
+
+    For pre-0.2.0 manifests (which excluded the map from the hash and
+    didn't always set it), we fall back to the in-tree reference dict so
+    historical sweeps continue to render. Once those legacy manifests
+    age out, the fallback can be deleted.
     """
+    bound = sweep.manifest.canonical_axis_map
+    if bound:
+        # Cast: Manifest stores dict[str, str] (loosened from Literal at
+        # serialization time); the runtime values are CanonicalDim
+        # members. mypy can't see that without a cast.
+        valid_dims = canonical_dims()
+        return {axis: dim for axis, dim in bound.items() if dim in valid_dims}
     key = (sweep.embodiment, sweep.task_name)
-    return _CANONICAL_AXIS_MAPS.get(key, {})
+    return _LEGACY_CANONICAL_AXIS_MAPS.get(key, {})
 
 
-_CANONICAL_AXIS_MAPS: dict[tuple[str, str], dict[str, CanonicalDim]] = {
+# Fallback for schema 0.1.0 manifests that predate canonical_axis_map
+# being bound into the payload. Schema 0.2.0+ Tasks emit their own map;
+# this dict is *only* read when the manifest's field is empty.
+_LEGACY_CANONICAL_AXIS_MAPS: dict[tuple[str, str], dict[str, CanonicalDim]] = {
     ("google_robot", "pick_coke_can"): {
         "orientation": "physics",
         "lighting": "visuals",
@@ -318,10 +333,10 @@ def canonical_profile_from_manifest(manifest: Manifest) -> CanonicalProfile:
     and delegates to `canonical_profile_for_sweep`, so the two paths
     share one implementation.
 
-    For task pairs the suite doesn't recognize (no entry in
-    `_CANONICAL_AXIS_MAPS`), every dim returns `n_cells=0` and the
-    rendered profile shows "not measured" everywhere — which is the
-    honest answer.
+    For task pairs whose manifest doesn't bind a `canonical_axis_map`
+    and that aren't in the legacy fallback, every dim returns
+    `n_cells=0` and the rendered profile shows "not measured"
+    everywhere — which is the honest answer.
     """
     synthetic_cells: list[CellResult] = []
     for cell_payload in manifest.cells:

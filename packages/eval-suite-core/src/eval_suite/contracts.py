@@ -90,6 +90,13 @@ class Policy(Protocol):
     `step` returns an `ActionLike` (Action for 7-DoF EEF manipulation, or
     JointAction for joint-space embodiments like Go1). The Adapter
     dispatches on the concrete type.
+
+    **Optional attribute discovered via getattr:**
+
+    - `family: str` — a short tag the analysis/calibration layer uses to
+      group submissions ("rt1", "octo", "lerobot", "oxe_replay", ...).
+      If absent, `sweep.py` falls back to "unknown". Declared on the
+      Policy itself so adding a new family doesn't require editing core.
     """
 
     def reset(self, instruction: str) -> None: ...

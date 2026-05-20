@@ -58,8 +58,10 @@ run_sweep() {
 
 # 1. RT-1-Converged on Google Robot pick coke can (29 cells × N=20 — incl. v0 paraphrase axis)
 run_sweep "rt1_google_robot_pick_coke_can" \
-    --model-family rt1 \
-    --rt1-ckpt-path "$RT1_CONVERGED" \
+    --policy simpler_env \
+    --policy-arg family=rt1 \
+    --policy-arg policy_setup=google_robot \
+    --policy-arg ckpt_path="$RT1_CONVERGED" \
     --task google_robot_pick_coke_can \
     --trials 20 \
     --calibration-tier C \
@@ -67,8 +69,10 @@ run_sweep "rt1_google_robot_pick_coke_can" \
 
 # 2. Octo-base on Google Robot pick coke can (29 cells × N=20 — incl. v0 paraphrase axis)
 run_sweep "octo_google_robot_pick_coke_can" \
-    --model-family octo \
-    --octo-model-type octo-base \
+    --policy simpler_env \
+    --policy-arg family=octo \
+    --policy-arg policy_setup=google_robot \
+    --policy-arg model_type=octo-base \
     --task google_robot_pick_coke_can \
     --trials 20 \
     --calibration-tier B \
@@ -77,8 +81,10 @@ run_sweep "octo_google_robot_pick_coke_can" \
 
 # 3. RT-1-X on WidowX put spoon on towel (1 cell × N=20)
 run_sweep "rt1x_widowx_spoon_on_towel" \
-    --model-family rt1 \
-    --rt1-ckpt-path "$RT1_X" \
+    --policy simpler_env \
+    --policy-arg family=rt1 \
+    --policy-arg policy_setup=widowx_bridge \
+    --policy-arg ckpt_path="$RT1_X" \
     --task widowx_spoon_on_towel \
     --trials 20 \
     --calibration-tier C \
@@ -86,8 +92,10 @@ run_sweep "rt1x_widowx_spoon_on_towel" \
 
 # 4. Octo-base on WidowX put spoon on towel (1 cell × N=20)
 run_sweep "octo_widowx_spoon_on_towel" \
-    --model-family octo \
-    --octo-model-type octo-base \
+    --policy simpler_env \
+    --policy-arg family=octo \
+    --policy-arg policy_setup=widowx_bridge \
+    --policy-arg model_type=octo-base \
     --task widowx_spoon_on_towel \
     --trials 20 \
     --calibration-tier C \

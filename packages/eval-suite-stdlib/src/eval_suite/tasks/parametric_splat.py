@@ -247,7 +247,7 @@ class _ParametricSplatEnv:
         spawn_point_name: str,
         max_episode_steps: int,
     ) -> None:
-        import mujoco  # type: ignore[import-untyped]
+        import mujoco  # type: ignore[import-not-found]
 
         self._max_steps = max_episode_steps
         self._metadata = scene_metadata
@@ -322,7 +322,7 @@ class _ParametricSplatEnv:
     def mj_model(self) -> Any:
         return self._model
 
-    def reset(self, seed: int = 0) -> tuple[np.ndarray, dict[str, Any]]:
+    def reset(self, seed: int = 0) -> tuple[np.ndarray[Any, Any], dict[str, Any]]:
         import mujoco
 
         np.random.default_rng(int(seed))
@@ -334,7 +334,9 @@ class _ParametricSplatEnv:
         self._predicate.reset(self._metadata)
         return self._obs(), {}
 
-    def step(self, action: np.ndarray) -> tuple[np.ndarray, float, bool, bool, dict[str, Any]]:
+    def step(
+        self, action: np.ndarray[Any, Any]
+    ) -> tuple[np.ndarray[Any, Any], float, bool, bool, dict[str, Any]]:
         import mujoco
 
         n_ctrl = int(self._model.nu)
@@ -392,8 +394,9 @@ class _ParametricSplatEnv:
                 pass
             self._renderer = None
 
-    def _obs(self) -> np.ndarray:
-        return np.concatenate([self._data.qpos, self._data.qvel]).astype(np.float32)
+    def _obs(self) -> np.ndarray[Any, Any]:
+        out: np.ndarray[Any, Any] = np.concatenate([self._data.qpos, self._data.qvel]).astype(np.float32)
+        return out
 
 
 # ---------------------------------------------------------------------------
@@ -428,7 +431,7 @@ class _MockSplatEnv:
         self.command: tuple[float, float, float] = (0.0, 0.0, 0.0)
         self._predicate.reset(scene_metadata)
 
-    def reset(self, seed: int | None = None) -> tuple[np.ndarray, dict[str, Any]]:
+    def reset(self, seed: int | None = None) -> tuple[np.ndarray[Any, Any], dict[str, Any]]:
         self._step_count = 0
         self._trunk_pos = self._start
         if seed is not None:
@@ -436,7 +439,9 @@ class _MockSplatEnv:
         self._predicate.reset(self._scene_metadata)
         return self._obs(), {}
 
-    def step(self, action: np.ndarray) -> tuple[np.ndarray, float, bool, bool, dict[str, Any]]:
+    def step(
+        self, action: np.ndarray[Any, Any]
+    ) -> tuple[np.ndarray[Any, Any], float, bool, bool, dict[str, Any]]:
         if action.shape[0] != GO1_ACTION_DIM:
             raise ValueError(f"Go1 action must be {GO1_ACTION_DIM}-dim; got {action.shape}")
         self._step_count += 1
@@ -477,11 +482,13 @@ class _MockSplatEnv:
         }
         return self._obs(), 0.0, success, stop, info
 
-    def _obs(self) -> np.ndarray:
-        return np.zeros(37, dtype=np.float32)
+    def _obs(self) -> np.ndarray[Any, Any]:
+        out: np.ndarray[Any, Any] = np.zeros(37, dtype=np.float32)
+        return out
 
-    def render(self) -> np.ndarray:
-        return np.full((64, 64, 3), 96, dtype=np.uint8)
+    def render(self) -> np.ndarray[Any, Any]:
+        out: np.ndarray[Any, Any] = np.full((64, 64, 3), 96, dtype=np.uint8)
+        return out
 
     def close(self) -> None:
         return None
@@ -493,11 +500,18 @@ def _predicate_target_position(
     """For mock testing: returns the center of the predicate's named region
     if it has one, else the fallback position. Lets the mock env drift
     the synthetic trunk toward the predicate's target and produce
-    interesting success values."""
-    state = getattr(predicate, "_state", None)
-    if state and state.get("region") is not None:
-        rpos = state["region"].pos
-        return (float(rpos[0]), float(rpos[1]), float(rpos[2]))
+    interesting success values.
+
+    Reads `predicate.target_position()` (optional public method, see
+    `_success_predicates.SuccessPredicate`). Predicates without one
+    (third-party plugins targeting an older protocol version) silently
+    fall back to the start position.
+    """
+    target = getattr(predicate, "target_position", None)
+    if callable(target):
+        pos = target()
+        if pos is not None:
+            return (float(pos[0]), float(pos[1]), float(pos[2]))
     return fallback
 
 

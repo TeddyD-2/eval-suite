@@ -97,6 +97,15 @@ class SuccessPredicate(Protocol):
     `scene_metadata` arg lets predicates that reference named regions
     (RobotReachedRegion, MaintainedClearance) resolve the region by name
     against the loaded scene.
+
+    **Optional method discovered via getattr:**
+
+    - `target_position() -> tuple[float, float, float] | None` —
+      returns the predicate's "where success points to" coordinate in
+      scene frame (region centroid for region-based predicates, None
+      for Survived). Used by the mock-env synth-trajectory path so it
+      doesn't have to poke private predicate state; analysis or
+      visualization layers can also read it.
     """
 
     KIND: ClassVar[str]
@@ -217,6 +226,11 @@ class Survived:
     def at_horizon(self) -> bool:
         return not self._state["fallen"]  # type: ignore[attr-defined]
 
+    def target_position(self) -> tuple[float, float, float] | None:
+        # Survival has no spatial target — caller should fall back to
+        # the robot's start position.
+        return None
+
 
 @register_predicate
 @dataclass(frozen=True)
@@ -275,6 +289,14 @@ class RobotReachedRegion:
 
     def at_horizon(self) -> bool:
         return bool(self._state["reached"])  # type: ignore[attr-defined]
+
+    def target_position(self) -> tuple[float, float, float] | None:
+        # Centroid of the bound region (None until reset() has resolved
+        # the region against scene_metadata).
+        region: NamedRegion | None = self._state["region"]  # type: ignore[attr-defined]
+        if region is None:
+            return None
+        return (float(region.pos[0]), float(region.pos[1]), float(region.pos[2]))
 
 
 @register_predicate
@@ -339,6 +361,15 @@ class MaintainedClearance:
 
     def at_horizon(self) -> bool:
         return not bool(self._state["violated"])  # type: ignore[attr-defined]
+
+    def target_position(self) -> tuple[float, float, float] | None:
+        # Clearance targets the keep-out region itself; the mock env
+        # uses the same fall-toward-target trajectory shape it uses for
+        # the reach predicate, which is fine for the synth trajectory.
+        region: NamedRegion | None = self._state["region"]  # type: ignore[attr-defined]
+        if region is None:
+            return None
+        return (float(region.pos[0]), float(region.pos[1]), float(region.pos[2]))
 
 
 # ---------------------------------------------------------------------------
