@@ -28,6 +28,16 @@ splat = [
     "scipy>=1.11",
     "manifold3d>=2.5",
 ]
+# v2 Phase 2 — RGB-D capture → TSDF fusion → MJCF (alternate real-to-sim path).
+rgbd = [
+    "open3d>=0.18",
+    "numpy>=1.24",
+]
+# v2 Phase 2 — Objaverse-XL asset fetcher.
+objaverse = [
+    "objaverse>=0.1.7",
+    "trimesh>=4.0",
+]
 # v2 Phase 1 — LeRobot interop. `lerobot` pulls torch + huggingface_hub
 # transitively; `datasets` is here too so LeRobot's HF-format datasets
 # work as a replay source for the calibration pillar.
