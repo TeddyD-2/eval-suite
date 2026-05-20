@@ -45,15 +45,21 @@ jobs:
           python-version: '3.11'
           cache: pip
 
-      - name: Install eval-suite + [lerobot] + [oxe] (CPU-only torch + TF)
-        # CPU torch keeps the install ~2 GB; the smoke tests don't need GPU.
-        # tensorflow-cpu likewise. We pin `--extra-index-url` for the CPU
-        # torch wheel and let pip resolve everything else.
+      - name: Install eval-suite (no extras)
+        # The interop tests in this workflow guard the *no-extras* path:
+        # registration via entry-points, lazy-load (heavy deps must NOT
+        # be in sys.modules after importing the policy module), and the
+        # helpful RuntimeError when an extra-gated constructor is called
+        # without its extra. Installing torch / tensorflow / lerobot here
+        # would turn most of those tests into skips and burn the runner's
+        # 30-minute budget on a multi-gigabyte download. The actual
+        # "does a real LeRobot checkpoint work end-to-end" gate lives on
+        # a separate, GPU-equipped, on-demand runner (out of scope for
+        # this push-triggered workflow).
         run: |
           python -m pip install --upgrade pip
-          pip install --extra-index-url https://download.pytorch.org/whl/cpu \
-            -e "packages/eval-suite-core[dev]" \
-            -e "packages/eval-suite-stdlib[lerobot,oxe]"
+          pip install -e "packages/eval-suite-core[dev]" \
+            -e "packages/eval-suite-stdlib"
 
-      - name: Interop contract tests
+      - name: Interop contract tests (no extras)
         run: pytest tests/test_lerobot_interop.py tests/test_oxe_replay.py -ra --durations=10
